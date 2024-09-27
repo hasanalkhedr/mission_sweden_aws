@@ -1,0 +1,175 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --primary-color: #3558a2;
+}
+
+.blue-color {
+    color: var(--primary-color) !important;
+}
+
+.blue-bg-sidebar {
+    background: var(--primary-color);
+}
+
+.blue-bg {
+    background: var(--primary-color) !important;
+}
+
+.blue-bg:hover {
+    background: rgb(96 165 250) !important;
+}
+
+.logo-container {
+    width: 14.3%;
+    /*max-width: 140px;*/
+}
+
+@media screen and (max-width: 1023px) {
+    .logo-container {
+        width: 100%;
+        max-width: 140px;
+    }
+}
+
+.disabled-button {
+    background: gray;
+}
+
+.login-container {
+    background: url("../assets/images/login-background.jpg") no-repeat center;
+    background-size: auto;
+}
+
+.login-form {
+    background-color: #ffffffdd !important;
+}
+
+.custom-hr-login-form {
+    height: 2px;
+    width: 100%;
+    background-color: var(--primary-color);
+}
+
+.powered-by {
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.IST {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+
+.weekday-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 0px;
+    width: 300px;
+}
+
+.weekday-checkboxes input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.weekday-container {
+    position: relative;
+    border: 1px solid #ccc;
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1/1;
+    justify-content: center;
+    align-items: center;
+}
+
+.weekday-checkboxes label {
+    width: 100%;
+    aspect-ratio: 1/1;
+    justify-content: center;
+    display: flex;
+    /*z-index: 9999;*/
+    align-items: center;
+    align-content: center;
+
+    cursor: pointer;
+}
+
+.weekday-checkboxes label:hover {
+    background-color: #e1e1e1;
+}
+
+.weekday-checkboxes input[type="checkbox"]:checked + label {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.weekday-checkboxes input[type="checkbox"]:checked + label:hover {
+    background: rgb(96 165 250);
+}
+
+
+.bluebackground {
+    background-color: #3558a2;
+}
+
+@media print {
+    .no-print {
+        display: none;
+    }
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact; /* Support modern browsers */
+    }
+
+    /* Example of preserving background colors */
+    .bg-blue-500 {
+        background-color: #3b82f6 !important;
+        color: white !important; /* Ensure text is visible */
+    }
+
+    .bg-gray-200 {
+        background-color: #e5e7eb !important;
+    }
+
+    /* Adjust text size and margins for printing */
+    .text-2xl {
+        font-size: 1.5rem !important; /* Slightly reduce text size */
+    }
+
+    /* Adjust grid to avoid splitting into two pages */
+    .grid {
+        grid-template-columns: 1fr !important; /* Use single column in print */
+    }
+
+    /* Fit content on a single page */
+    html, body {
+        width: 100%;
+        height: auto;
+        overflow: visible !important;
+    }
+    @page {
+        size: A4;
+        margin: 10mm; /* You can adjust the margin as needed */
+    }
+
+    /* Prevent page breaks inside elements */
+    .avoid-break {
+        page-break-inside: avoid !important;
+    }
+
+    /* Scale down content to fit on one page */
+    html, body {
+        zoom: 0.9; /* You can adjust zoom level to fit content */
+    }
+}
