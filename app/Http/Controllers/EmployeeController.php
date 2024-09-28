@@ -16,7 +16,14 @@ class EmployeeController extends Controller
     }
     public function show(Employee $employee)
     {
-        return view('employees.show', compact('employee'));
+        $departments = Department::all();
+        $roles = [
+            'employee',
+            'supervisor',
+            'hr',
+            'sg'
+        ];
+        return view('employees.show', compact('employee', 'departments', 'roles'));
     }
     public function create()
     {
@@ -82,13 +89,14 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'full_name' => 'required',
-            'email' => 'required|email|unique:employees,email'.$employee->id,
+            'email' => ['required', 'email', 'unique:employees,email,' . $employee->id],
             'phone' => 'required',
             'department_id' => 'required',
             'role' => 'required|in:employee,supervisor,hr,sg',
             'position' => 'required',
             'administrativ_residence' => 'required',
             'service' => 'required',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         $employee->update($request->all());

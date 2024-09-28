@@ -2,7 +2,7 @@
 
 @section('content')
     <h2 class="text-2xl font-bold mb-6 text-blue-700">New Employee Data</h2>
-    <div x-data="{ emailValue: '' }">
+    <div x-data="{ emailValue: '{{old('email')}}' }">
         <form action="{{ route('employees.store') }}" method="POST" class="w-full" enctype="multipart/form-data">
             @if ($errors->any())
                 <div class="text-danger text-pink-600">
@@ -22,7 +22,7 @@
                             <x-label>
                                 Adresse électronique
                             </x-label>
-                            <x-text-input x-model="emailValue" name="email" value="{{ old('email') }}" />
+                            <x-text-input x-model="emailValue" name="email" />
                         </div>
                     </div>
                     <div class="flex flex-wrap -mx-3 mb-6">
@@ -141,10 +141,12 @@
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-1/2 px-3">
+                    <input type="hidden" name="allow_order" value="0"/>
                     <input type="checkbox" value="1" @checked(old('allow_order')) name="allow_order" />
                     <x-label class="inline">Soumettre des demandes</x-label>
                 </div>
                 <div class="w-1/2 px-3">
+                    <input type="hidden" name="recieve_email" value="0"/>
                     <input type="checkbox" value="1" @checked(old('recieve_email')) name="recieve_email" />
                     <x-label class="inline">Recevoir des e-mails</x-label>
                 </div>
