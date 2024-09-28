@@ -41,15 +41,27 @@ class EmployeeController extends Controller
             'position' => 'required',
             'administrativ_residence' => 'required',
             'service' => 'required',
+            'password' => ['required', 'confirmed'],
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         $user = User::create([
-            'name' => $request->first_name . ' ' . $request->last_name,
+            'name' => $request->full_name,
             'email' => $request->email,
             'password' => bcrypt('password'),
         ]);
 
-        Employee::create(array_merge($request->all(), ['user_id' => $user->id]));
+       $employee =  Employee::create(array_merge($request->all(), ['user_id' => $user->id]));
+        if ($request->hasFile('profile_image')) {
+            // Store the image in 'storage/app/public/profile_pictures'
+            $file = $request->file('profile_image');
+            $filename = $employee->full_name . '.' . $file->getClientOriginalExtension(); // e.g. 1609459200.jpeg
+            $path = $file->storeAs('profile_images', $filename, 'public');
+
+            // Save the image path to the user's profile
+            $employee->profile_image = $path;
+            $employee->save();
+        }
 
         return redirect()->route('employees.index');
     }

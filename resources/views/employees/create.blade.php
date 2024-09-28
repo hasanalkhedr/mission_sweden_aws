@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="text-2xl font-bold mb-6 text-blue-700">New Employee Data</h2>
     <div x-data="{ emailValue: '' }">
-        <form action="{{ route('employees.store') }}" method="POST" class="w-full">
+        <form action="{{ route('employees.store') }}" method="POST" class="w-full" enctype="multipart/form-data">
             @if ($errors->any())
                 <div class="text-danger text-pink-600">
                     <ul>
@@ -74,28 +74,22 @@
             </div>
             <x-form-divider>Fonction Administrative</x-form-divider>
             <div class="flex flex-wrap -mx-3 mb-6">
-                <div class="w-1/3 px-3">
+                <div class="w-1/2 px-3">
                     <x-label>
                         Fonction Administrative
                     </x-label>
                     <x-text-input name="position" value="{{ old('position') }}" />
                 </div>
-                <div class="w-1/3 px-3">
+                <div class="w-1/2 px-3">
                     <x-label>
                         Dép / Antenne
                     </x-label>
-                    <x-select-input name="department_name">
+                    <x-select-input name="department_id">
                         @foreach ($departments as $department)
                             <option @selected(old('department_id') == $department->id ? 'selected' : '') value="{{ $department->id }}">{{ $department->name }}
                             </option>
                         @endforeach
                     </x-select-input>
-                </div>
-                <div class="w-1/3 px-3">
-                    <x-label>
-                        Service
-                    </x-label>
-                    <x-text-input name="service" value="{{ old('service') }}" />
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -147,11 +141,11 @@
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-1/2 px-3">
-                    <input type="checkbox" @checked(old('allow_order')) name="allow_order" />
+                    <input type="checkbox" value="1" @checked(old('allow_order')) name="allow_order" />
                     <x-label class="inline">Soumettre des demandes</x-label>
                 </div>
                 <div class="w-1/2 px-3">
-                    <input type="checkbox" @checked(old('recieve_email')) name="recieve_email" />
+                    <input type="checkbox" value="1" @checked(old('recieve_email')) name="recieve_email" />
                     <x-label class="inline">Recevoir des e-mails</x-label>
                 </div>
             </div>

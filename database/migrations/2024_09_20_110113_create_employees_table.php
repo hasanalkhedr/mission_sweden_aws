@@ -22,6 +22,9 @@ return new class extends Migration
             $table->foreignId('department_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('role', ['employee', 'supervisor', 'hr', 'sg']);
+            $table->string('profile_image')->nullable();
+            $table->boolean('allow_order')->default(false);
+            $table->boolean('recieve_email')->default(false);
             $table->timestamps();
         });
 
