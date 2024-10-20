@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 
+
+.select2-container .select2-dropdown {
+    top: 100% !important; /* Forces the dropdown to open below the select element */
+}
 :root {
     --primary-color: #3558a2;
 }
@@ -20,7 +24,7 @@
 }
 
 .blue-bg:hover {
-    background: rgb(96 165 250) !important;
+    background: var(--primary-color) !important;
 }
 
 .logo-container {
@@ -123,6 +127,9 @@
 @media print {
     .no-print {
         display: none;
+    }
+    .printable {
+        display: block !important;
     }
 }
 

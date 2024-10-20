@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MissionApprove extends Model
 {
-    protected $fillable = ['mission_order_id', 'approval_id', 'approval_role', 'comment', 'status'];
+    protected $fillable = ['mission_order_id', 'approval_id', 'approval_role', 'comment', 'status','memor_status'];
 
     public function missionOrder()
     {

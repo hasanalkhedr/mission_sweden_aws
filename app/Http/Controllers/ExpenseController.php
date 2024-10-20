@@ -5,72 +5,71 @@ namespace App\Http\Controllers;
 use App\Models\Expense;
 use App\Models\MissionOrder;
 use Illuminate\Http\Request;
+use Storage;
 
 class ExpenseController extends Controller
 {
-    public function index()
-    {
-        $expenses = Expense::with('missionOrder')->get();
-        return view('expenses.index', compact('expenses'));
-    }
-
-    public function show(Expense $expense)
-    {
-        return view('expenses.show', compact('expense'));
-    }
-    public function create()
-    {
-        $missionOrders = MissionOrder::all();
-        return view('expenses.create', compact('missionOrders'));
-    }
-
     public function store(Request $request)
     {
+        $missionOrder = MissionOrder::find($request->input('mission_order_id'));
         $request->validate([
             'mission_order_id' => 'required',
             'amount' => 'required|numeric',
             'currency' => 'required',
+            'expense_date' => 'required|date|after_or_equal:'.$missionOrder->start_date.'|before_or_equal:'.$missionOrder->end_date,
             'description' => 'required',
-            'document' => 'required|file',
+            'expense_document' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $documentPath = $request->file('document')->store('documents');
+        $expense = Expense::create($request->all());
+        if ($request->hasFile('expense_document')) {
+            // Store the image in 'storage/app/public/profile_pictures'
+            $file = $request->file('expense_document');
+            $filename = $request->input('mission_order_id') . '-m-'. $expense->id . '.'.$file->getClientOriginalExtension(); // e.g. 1609459200.jpeg
 
-        Expense::create(array_merge($request->all(), ['document' => $documentPath]));
+            $path = $file->storeAs('expense_documents', $filename, 'public');
 
-        return redirect()->route('expenses.index');
+            // Save the image path to the user's profile
+            $expense->expense_document = $path;
+            $expense->save();
+        }
+        return redirect()->route('mission_orders.m_create',$request->input('mission_order_id'));
     }
-
-    public function edit(Expense $expense)
-    {
-        $missionOrders = MissionOrder::all();
-        return view('expenses.edit', compact('expense', 'missionOrders'));
-    }
-
     public function update(Request $request, Expense $expense)
     {
         $request->validate([
-            'mission_order_id' => 'required',
             'amount' => 'required|numeric',
             'currency' => 'required',
+            'expense_date' => 'required|date|after_or_equal:'.$expense->missionOrder->start_date.'|before_or_equal:'.$expense->missionOrder->end_date,
             'description' => 'required',
-            'document' => 'nullable|file',
+            'expense_document' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        if ($request->hasFile('document')) {
-            $documentPath = $request->file('document')->store('documents');
-            $expense->update(array_merge($request->all(), ['document' => $documentPath]));
-        } else {
-            $expense->update($request->all());
+        $expense->update($request->all());
+        if ($request->hasFile('expense_document')) {
+            // Store the image in 'storage/app/public/profile_pictures'
+            $file = $request->file('expense_document');
+            $filename = $request->input('mission_order_id') . '-'. $expense->id . '.'.$file->getClientOriginalExtension(); // e.g. 1609459200.jpeg
+
+            $path = $file->storeAs('expense_documents', $filename, 'public');
+
+            // Save the image path to the user's profile
+            $expense->expense_document = $path;
+            $expense->save();
         }
-
-        return redirect()->route('expenses.index');
+        return redirect()->route('mission_orders.m_create',$request->input('mission_order_id'));
     }
-
     public function destroy(Expense $expense)
     {
+        $mission_order_id = $expense->mission_order_id;
         $expense->delete();
+        return redirect()->route('mission_orders.m_create',$mission_order_id);
+    }
 
-        return redirect()->route('expenses.index');
+    public function download_document(Expense $expense) {
+        if (!Storage::exists($expense->expense_document)) {
+            abort(404, 'File not found.');
+        }
+        return Storage::download($expense->expense_document);
     }
 }

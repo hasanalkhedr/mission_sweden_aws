@@ -16,7 +16,7 @@ class RoleMiddleware
      * @param  string  $role
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
         // Check if user is authenticated
         if (!Auth::check()) {
@@ -27,7 +27,7 @@ class RoleMiddleware
         $userRole = Auth::user()->employee->role;
 
         // Check if the user's role matches the required role
-        if ($userRole !== $role) {
+        if (!in_array($userRole, $roles)) {
             abort(403, 'Unauthorized action.');
         }
 

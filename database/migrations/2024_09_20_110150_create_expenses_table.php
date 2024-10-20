@@ -17,7 +17,8 @@ return new class extends Migration
             $table->decimal('amount', 8, 2);
             $table->string('currency');
             $table->text('description');
-            $table->string('document');
+            $table->date('expense_date');
+            $table->string('expense_document');
             $table->timestamps();
         });
 

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('approval_id')->constrained('employees')->onDelete('cascade');
             $table->string('approval_role');
             $table->text('comment')->nullable();
-            $table->enum('status', ['draft', 'sup_approve', 'hr_approve', 'sg_approve', 'rejected', 'approved', 'paid'])->default('draft');
+            $table->enum('status', ['draft', 'sup_approve', 'hr_approve', 'sg_approve', 'rejected', 'approved', 'paid'])->nullable();
+            $table->enum('memor_status', ['draft', 'sup_approve', 'hr_approve', 'sg_approve', 'rejected', 'approved', 'paid'])->nullable();
             $table->timestamps();
         });
 

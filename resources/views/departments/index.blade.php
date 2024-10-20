@@ -1,39 +1,148 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1 class="text-2xl font-bold">Departments</h1>
-    <a href="{{ route('departments.create') }}" class="bg-blue-500 text-white py-2 px-4 rounded mb-6 inline-block">Add Department</a>
-    <table class="w-full bg-white shadow-md rounded mb-6">
-        <thead>
-            <tr>
-                <th class="px-6 py-3 text-left">Department Name</th>
-                <th class="px-6 py-3 text-left">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($departments as $department)
-            <tr>
-                <td class="px-6 py-4"><a class="underline text-blue-500" href="{{route('departments.show',$department->id)}}">{{ $department->name }}</a></td>
-                <td class="px-6 py-4">
-                    <a href="{{ route('departments.edit', $department->id) }}" class="text-blue-500"><i class="fas fa-edit"></i></a>
-                    <form action="{{ route('departments.destroy', $department->id) }}" method="POST" class="inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-500"><i class="fas fa-trash-alt"></i></button>
-                    </form>
-                </td>
-            </tr>
-            @empty
+@section('title', __('Departments'))
+<nav class="flex justify-between items-center p-2 text-black font-bold">
+    <div class="text-lg blue-color">
+        {{ __('Departments') }}
+    </div>
+    <div>
+        @if (auth()->user()->employee->role == 'hr' || auth()->user()->employee->role == 'sg')
+            <button class="hover:bg-blue-700 text-white py-2 px-4 rounded-full blue-bg" data-modal-toggle="createModal">
+                {{ __('Add Department') }}
+            </button>
+        @endif
+    </div>
+</nav>
+@include('partials.searches._search-departments')
+<div class="mx-2 overflow-x-auto relative shadow-md sm:rounded-lg">
+    <table x-data="data()" class="w-full text-sm text-left text-gray-500" x-data="departmentData">
+        @unless ($departments->isEmpty())
+            <thead class="text-s text-gray-700 uppercase bg-gray-50">
                 <tr>
-                    <td colspan="2">
-                        <div class="w-full block text-center items-center text-blue-400 bold py-1 px-1">
-                            <h2>There is no Department to display</h2>
-                        </div>
+                    <th @click="sortByColumn" scope="col" class="cursor-pointer py-3 px-6 blue-color">
+                        {{ __('Name') }}
+                    </th>
+                    <th @click="sortByColumn" scope="col" class="cursor-pointer py-3 px-6 blue-color">
+                        {{ __('Supervisor') }}
+                    </th>
+                    @if (auth()->user()->employee->role == 'hr' || auth()->user()->employee->role == 'sg')
+                        <th scope="col" class="py-3 px-6">
+                            <span class="sr-only">{{ __('Edit') }}</span>
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            <span class="sr-only">{{ __('Delete') }}</span>
+                        </th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody x-ref="tbody">
+                @foreach ($departments as $department)
+                    <tr class="bg-white hover:bg-gray-50">
+                        <td class="border-b py-4 px-6 font-bold text-gray-900 whitespace-nowrap cursor-pointer"
+                            onclick="window.location.href = '{{ url(route('departments.show', ['department' => $department->id])) }}'">
+                            <div class="cursor-pointer">
+                                {{ $department->name }}
+                            </div>
+                        </td>
+                        @if ($department->manager == null)
+                            <td class="py-4 px-6 border-b cursor-pointer">
+                                <div class="font-bold">
+                                    --
+                                </div>
+                            </td>
+                        @else
+                            <td class="py-4 px-6 border-b cursor-pointer"
+                                onclick="window.location.href = '{{ url(route('employees.show', ['employee' => $department->manager_id])) }}'">
+                                <div class="cursor-pointer">
+                                    {{ $department->manager->first_name }} {{ $department->manager->last_name }}
+                                </div>
+                            </td>
+                        @endif
+                        @if (auth()->user()->employee->role == 'hr' || auth()->user()->employee->role == 'sg')
+                            <td class="py-4 px-6 text-right border-b">
+                                <button class="font-medium hover:underline blue-color" type="button"
+                                    data-modal-toggle="editModal-{{ $department->id }}">
+                                    {{ __('Edit') }}
+                                </button>
+                            </td>
+                            <td class="py-4 px-6 text-right border-b">
+                                <button class="font-medium text-red-600 hover:underline" type="button"
+                                    data-modal-toggle="deleteModal-{{ $department->id }}">
+                                    {{ __('Delete') }}
+                                </button>
+                            </td>
+                        @endif
+                        @include('partials.modals._delete-department')
+                        @include('partials.modals._edit-department')
+                    </tr>
+                @endforeach
+            @else
+                <tr class="border-gray-300">
+                    <td colspan="4" class="px-4 py-8 border-t border-gray-300 text-lg">
+                        <p class="text-center">{{ __('No Departments Found') }}</p>
                     </td>
                 </tr>
-            @endforelse
+            @endunless
         </tbody>
     </table>
+@include('partials.modals._create-department')
 </div>
+
+<div class="mt-6 p-4">
+    {{ $departments->links() }}
+</div>
+
+<script type="text/javascript">
+    function data() {
+        return {
+            sortBy: "",
+            sortAsc: false,
+            sortByColumn($event) {
+                if (this.sortBy === $event.target.innerText) {
+                    if (this.sortAsc) {
+                        this.sortBy = "";
+                        this.sortAsc = false;
+                    } else {
+                        this.sortAsc = !this.sortAsc;
+                    }
+                } else {
+                    this.sortBy = $event.target.innerText;
+                }
+
+                let rows = this.getTableRows()
+                    .sort(
+                        this.sortCallback(
+                            Array.from($event.target.parentNode.children).indexOf(
+                                $event.target
+                            )
+                        )
+                    )
+                    .forEach((tr) => {
+                        this.$refs.tbody.appendChild(tr);
+                    });
+            },
+            getTableRows() {
+                return Array.from(this.$refs.tbody.querySelectorAll("tr"));
+            },
+            getCellValue(row, index) {
+                return row.children[index].innerText;
+            },
+            sortCallback(index) {
+                return (a, b) =>
+                    ((row1, row2) => {
+                        return row1 !== "" &&
+                            row2 !== "" &&
+                            !isNaN(row1) &&
+                            !isNaN(row2) ?
+                            row1 - row2 :
+                            row1.toString().localeCompare(row2);
+                    })(
+                        this.getCellValue(this.sortAsc ? a : b, index),
+                        this.getCellValue(this.sortAsc ? b : a, index)
+                    );
+            }
+        };
+    }
+</script>
 @endsection

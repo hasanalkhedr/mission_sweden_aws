@@ -13,18 +13,20 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->string('full_name');
-            $table->string('position');
-            $table->string('administrativ_residence');
-            $table->string('service');
+            $table->string('first_name');
+            $table->string('last_name');
             $table->string('email')->unique();
-            $table->string('phone');
-            $table->foreignId('department_id')->constrained()->onDelete('cascade');
+            $table->string('phone')->nullable()->unique();
+            $table->foreignId('department_id')->constrained('departments')->cascadeOnUpdate()->nullOnDeleteonDelete();
+            $table->string('profile_image')->nullable();
+            $table->boolean('is_supervisor')->default(false);
+            $table->boolean('recieve_email')->default(false);
+            $table->boolean('allow_order')->default(false);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->enum('role', ['employee', 'supervisor', 'hr', 'sg']);
-            $table->string('profile_image')->nullable();
-            $table->boolean('allow_order')->default(false);
-            $table->boolean('recieve_email')->default(false);
+            $table->string('position')->nullable();
+            $table->string('administrativ_residence')->nullable();
+            $table->string('service')->nullable();
             $table->timestamps();
         });
 

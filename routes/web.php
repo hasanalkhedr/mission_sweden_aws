@@ -2,16 +2,16 @@
 
 use App\Http\Controllers\BaremeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TourneeApproveController;
+use App\Http\Controllers\TourneeController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MissionOrderController;
 use App\Http\Controllers\MissionApproveController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\TourneeExpenseController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
-
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -22,7 +22,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 
 // Home route, which redirects based on user roles
 Route::get('/', function () {
@@ -46,36 +45,64 @@ Route::get('/', function () {
     }
 })->middleware('auth');
 
-// Mission Orders routes
+
+Route::middleware('web')->group(function() {
 
 
-// Mission Orders additional routes for HR and SGA role-specific views
-//Route::get('mission_orders/hr','MissionOrderController@hrIndex')->name('mission_orders.hrIndex');
-/*Route::get('mission_orders/hr', [MissionOrderController::class, 'hrIndex'])->name('mission_orders.hrIndex')->middleware('auth', 'role:hr');
-Route::get('mission_orders/sg', [MissionOrderController::class, 'sgIndex'])->name('mission_orders.sgIndex')->middleware('auth', 'role:sg');*/
+// Mission Order routes
+Route::get('/mission_orders/{missionOrder}/report', [MissionOrderController::class, 'showReport'])->middleware('auth')->name('mission_orders.report');
+Route::get('mission_orders/m_index', [MissionOrderController::class, 'm_index'])->middleware('auth')->name('mission_orders.m_index');
+Route::get('mission_orders/{missionOrder}/m_show', [MissionOrderController::class, 'm_show'])->middleware('auth')->name('mission_orders.m_show');
+Route::get('mission_orders/{missionOrder}/m_create', [MissionOrderController::class, 'm_create'])->middleware('auth')->name('mission_orders.m_create');
+Route::get('mission_orders/{missionOrder}/m_edit', [MissionOrderController::class, 'm_edit'])->middleware('auth')->name('mission_orders.m_edit');
+Route::put('mission_orders/{missionOrder}/m_update', [MissionOrderController::class, 'm_update'])->middleware('auth')->name('mission_orders.m_update');
+Route::get('mission_orders/{missionOrder}/m_report', [MissionOrderController::class, 'm_report'])->middleware('auth')->name('mission_orders.m_report');
+Route::put('mission_orders/{missionOrder}/m_destroy', [MissionOrderController::class, 'm_destroy'])->middleware('auth')->name('mission_orders.m_destroy');
+Route::put('/mission_orders/{missionOrder}/changeDates', [MissionOrderController::class, 'changeDates'])->middleware(['auth', 'role:hr'])->name('mission_orders.changeDates');
 Route::resource('mission_orders', MissionOrderController::class)->middleware('auth');
-// routes/web.php
 
-Route::get('/mission-orders/{id}/report', [MissionOrderController::class, 'showReport'])->middleware('auth')->name('mission_orders.report');
-
+// Tournee routes
+Route::get('/tournees/{tournee}/report', [TourneeController::class, 'showReport'])->middleware('auth')->name('tournees.report');
+Route::get('tournees/m_index', [TourneeController::class, 'm_index'])->middleware('auth')->name('tournees.m_index');
+Route::get('tournees/{tournee}/m_show', [TourneeController::class, 'm_show'])->middleware('auth')->name('tournees.m_show');
+Route::get('tournees/{tournee}/m_create', [TourneeController::class, 'm_create'])->middleware('auth')->name('tournees.m_create');
+Route::get('tournees/{tournee}/m_edit', [TourneeController::class, 'm_edit'])->middleware('auth')->name('tournees.m_edit');
+Route::put('tournees/{tournee}/m_update', [TourneeController::class, 'm_update'])->middleware('auth')->name('tournees.m_update');
+Route::get('tournees/{tournee}/m_report', [TourneeController::class, 'm_report'])->middleware('auth')->name('tournees.m_report');
+Route::put('tournees/{tournee}/m_destroy', [TourneeController::class, 'm_destroy'])->middleware('auth')->name('tournees.m_destroy');
+Route::put('/tournees/{tournee}/changeDates', [TourneeController::class, 'changeDates'])->middleware(['auth', 'role:hr'])->name('tournees.changeDates');
+Route::resource('tournees', TourneeController::class)->middleware('auth');
 
 // Mission Approves routes
-Route::resource('mission_approves', MissionApproveController::class)->middleware('auth');
-Route::get('mission_approves/supervisor_approve/{missionOrder}',[MissionApproveController::class, 'supervisor_approve'])->name('supervisor_approve')->middleware(['auth', 'role:supervisor']);
-Route::get('mission_approves/hr_approve/{missionOrder}',[MissionApproveController::class, 'hr_approve'])->name('hr_approve')->middleware(['auth', 'role:hr']);
-Route::get('mission_approves/sg_approve/{missionOrder}',[MissionApproveController::class, 'sg_approve'])->name('sg_approve')->middleware(['auth', 'role:sg']);
+Route::post('mission_approves/{missionOrder}/approve', [MissionApproveController::class, 'approve'])->middleware('auth')->name('mission_approves.approve');
+Route::post('mission_approves/{missionOrder}/m_approve', [MissionApproveController::class, 'm_approve'])->middleware('auth')->name('mission_approves.m_approve');
+
+// Tournee Approves routes
+Route::post('tournee_approves/{tournee}/approve', [TourneeApproveController::class, 'approve'])->middleware('auth')->name('tournee_approves.approve');
+Route::post('tournee_approves/{tournee}/m_approve', [TourneeApproveController::class, 'm_approve'])->middleware('auth')->name('tournee_approves.m_approve');
 
 // Expenses routes
 Route::resource('expenses', ExpenseController::class)->middleware('auth');
+Route::get('/expenses/{expense}/download', [ExpenseController::class, 'download_document'])->name('expenses.download_document');
+
+// Tournee Expenses routes
+Route::resource('tournee_expenses', TourneeExpenseController::class)->middleware('auth');
+Route::get('/tournee_expenses/{expense}/download', [TourneeExpenseController::class, 'download_document'])->name('tournee_expenses.download_document');
 
 // Employees routes (restricted to HR only)
-Route::resource('employees', EmployeeController::class)->middleware(['auth', 'role:hr']);
+Route::put('employees/updatePassword/{employee}', [EmployeeController::class, 'updatePassword'])->middleware('auth')->name('employees.updatePassword');
+Route::resource('employees', EmployeeController::class)->middleware('auth');
 
 // Departments routes (could be accessible to all roles depending on the policy)
-Route::resource('departments', DepartmentController::class)->middleware(['auth', 'role:hr']);
+Route::resource('departments', DepartmentController::class)->middleware(['auth','role:hr,sg']);
 
 // Baremes routes
-Route::resource('baremes', BaremeController::class)->middleware(['auth','role:hr']);
-
+Route::resource('baremes', BaremeController::class)->middleware(['auth', 'role:hr,sg,supervisor']);
+});
 // Authentication routes (Laravel Breeze)
 require __DIR__ . '/auth.php';
+
+
+Route::get('/{anything}', function(){
+    return view('errors.404');
+});

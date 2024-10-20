@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $fillable = ['full_name', 'email', 'phone', 'department_id', 'user_id', 'role', 'position', 'administrativ_residence', 'service', 'profile_image', 'allow_order', 'recieve_email'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'phone', 'department_id', 'profile_image', 'is_supervisor', 'recieve_email', 'allow_order', 'user_id', 'role', 'position', 'administrativ_residence', 'service'];
 
     public function department()
     {
@@ -17,6 +17,10 @@ class Employee extends Model
     {
         return $this->hasMany(MissionOrder::class);
     }
+    public function tournees()
+    {
+        return $this->hasMany(Tournee::class);
+    }
 
     public function approvals()
     {
@@ -26,6 +30,11 @@ class Employee extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function managed_departments()
+    {
+        return $this->hasMany(Department::class);
     }
 }
 

@@ -1,180 +1,283 @@
-<button data-drawer-target="sidebar-multi-level-sidebar" data-drawer-toggle="sidebar-multi-level-sidebar"
-    aria-controls="sidebar-multi-level-sidebar" type="button"
-    class="no-print inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-    <span class="sr-only">Open sidebar</span>
-    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <path clip-rule="evenodd" fill-rule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
-        </path>
-    </svg>
-</button>
-<aside id="sidebar-multi-level-sidebar"
-    class="no-print h-full left-0 z-40 w-72 min-w-72 transition-transform -translate-x-full sm:translate-x-0 bluebackground"
-    aria-label="Sidebar">
+<!DOCTYPE html>
+<html lang="en">
 
-    <div class="h-full px-3 py-4 overflow-y-auto bluebackground dark:bg-gray-800">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@yield('title') </title>
 
-        <ul class="space-y-2 font-medium">
-            {{--    <li>
-                <a href="{{ route('dashboard') }}"
-                    class="flex items-center p-2 text-gray-100 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="w-5 h-5 text-gray-100 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                        <path
-                            d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
-                        <path
-                            d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
-                    </svg>
-                    <span class="ms-3">Dashboard</span>
-                </a>
-            </li> --}}
-            <!-- Mission Menu -->
-            <li>
-                <a href="{{ route('mission_orders.index') }}">
-                    <button type="button"
-                        class="flex items-center w-full p-2 text-base text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                        aria-controls="dropdown-example" data-collapse-toggle="dropdown-example" aria-expanded="false">
-                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Missions</span>
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 4 4 4-4" />
-                        </svg>
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/favico32.png') }}">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+        integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
+        integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-                    </button></a>
-                <ul id="dropdown-example" class="py-2 space-y-2"><!-- add hidden class -->
-                    <li>
-                        <a href="{{ route('mission_orders.create') }}"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Ordre
-                            de Mission</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Mémoire
-                            de Frais
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Signatures
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <!-- Tournees Menu -->
-            <li>
-                <button type="button"
-                    class="flex items-center w-full p-2 text-base text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                    aria-controls="dropdown-example" data-collapse-toggle="dropdown-example" aria-expanded="false">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-100 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
-                        <path
-                            d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                    </svg>
-                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Tournées
-                    </span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
-                </button>
-                <ul id="dropdown-example" class="py-2 space-y-2"><!-- add hidden class -->
-                    <li>
-                        <a href="#"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Ordre
-                            de Mission</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Mémoire
-                            de Frais
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="{{ route('employees.show', auth()->user()->employee) }}"
-                    class="flex items-center p-2 text-gray-100 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-100 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-                        <path
-                            d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-                    </svg>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Mon Profil</span>
-                    <span
-                        class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-100 bg-gray-100 rounded-full dark:bg-gray-700 dark:text-gray-300">Pro</span>
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center p-2 text-gray-100 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-100 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Calendrier</span>
-                    <span
-                        class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex items-center p-2 text-gray-100 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-100 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                        <path
-                            d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                    </svg>
-                    <span class="flex-1 ms-3 whitespace-nowrap">Rapports</span>
-                </a>
-            </li>
-            <!-- Settings Menu -->
-            <li>
-                <button type="button"
-                    class="flex items-center w-full p-2 text-base text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                    aria-controls="dropdown-example" data-collapse-toggle="dropdown-example" aria-expanded="false">
-                    <svg class="flex-shrink-0 w-5 h-5 text-gray-100 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        viewBox="0 0 18 21">
-                        <path
-                            d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
-                    </svg>
-                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Settings</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
-                </button>
-                <ul id="dropdown-example" class="py-2 space-y-2"><!-- add hidden class -->
-                    <li>
-                        <a href="{{ route('baremes.index') }}"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Ordre
-                            de Parameters</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('departments.index') }}"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Dép
-                            / Antenne
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('employees.index') }}"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Utilisateurs
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+        integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ asset('vendor/megaphone/css/megaphone.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @stack('head')
 
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center w-full p-2 text-gray-100 hover:text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Signatures
+    @livewireStyles
+</head>
 
+<body>
+    <div>
+        <div class="lg:flex h-full min-h-screen">
+            <div class="lg:flex-col lg:w-1/6 border-blue-200 bg-blue-600">
+                <div class="logo-container w-full">
+                    <x-application-logo/>
+                </div>
+                <div class="flex flex-row items-center place-content-between">
+                    <div class="lg:pt-6">
+                        <button data-collapse-toggle="aside-default"
+                            class="inline-flex items-center mx-2 p-2 text-sm text-white rounded-lg lg:hidden"
+                            aria-controls="navbar-default" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:mt-2">
+                    <aside class="hidden w-full lg:inline blue-bg" style="margin-top: 1%;" id="aside-default">
+                        <ul class="content-between space-y-2">
+                            {{-- @unless(auth()->user()->hasExactRoles('employee')) --}}
+                                <li>
+                                    <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        href="{{ route('departments.index') }}">
+                                        <span class="mx-2 font-medium">{{ __('Departments') }}</span>
+                                    </a>
 
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+                                </li>
+                            {{--@endunless --}}
+                            {{--@unless(auth()->user()->hasExactRoles('employee') && auth()->user()->is_supervisor == false)--}}
+                                <li>
+                                    <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        href="{{ route('employees.index') }}">
+                                        <span class="mx-2 font-medium">{{ __('Users') }}</span>
+                                    </a>
+                                </li>
+                            {{--@endunless--}}
+                            {{--@if (auth()->user()->can_submit_requests)--}}
+                                <li>
+                                    <a href="{{ url(route('departments.index')) }}"
+                                        class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                        <span class="mx-2 font-medium">{{ __('Submitted Leave Requests') }}</span>
+                                    </a>
+                                </li>
+                           {{-- @endif--}}
+                            {{--@unless(auth()->user()->hasExactRoles('employee') && auth()->user()->is_supervisor == false)--}}
+                                <li>
+                                    <button type="button"
+                                        class="flex items-center mx-2 p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        style="width: -webkit-fill-available;" aria-controls="dropdown-leaves"
+                                        data-collapse-toggle="dropdown-leaves">
+                                        <span class="flex-1 mx-2 text-left font-medium text-white"
+                                            sidebar-toggle-item>{{ __('Received Leave Requests') }}</span>
+                                        <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                    <ul id="dropdown-leaves" class="hidden py-2 space-y-2 mx-2">
+                                        <li>
+                                            <a href="{{ url(route('departments.index')) }}"
+                                                class="flex items-center p-2 pl-8 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                                <span>{{ __('Incoming') }}</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url(route('departments.index')) }}"
+                                                class="flex items-center p-2 pl-8 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                                <span>{{ __('Accepted') }}</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url(route('departments.index')) }}"
+                                                class="flex items-center p-2 pl-8 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                                <span>{{ __('Rejected') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{--@endunless--}}
+                            {{--@if (auth()->user()->can_submit_requests)--}}
+                                <li>
+                                    <a href="{{ url(route('departments.index')) }}"
+                                        class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                        <span class="mx-2 font-medium">{{ __('Submitted Overtime Requests') }}</span>
+                                    </a>
+                                </li>
+                            {{--@endif--}}
+                            {{--@unless(auth()->user()->hasExactRoles('employee') && auth()->user()->is_supervisor == false)--}}
+                                <li>
+                                    <button type="button"
+                                        class="flex items-center mx-2 p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        style="width: -webkit-fill-available;" aria-controls="dropdown-overtimes"
+                                        data-collapse-toggle="dropdown-overtimes">
+                                        <span class="flex-1 mx-2 text-left font-medium text-white"
+                                            sidebar-toggle-item>{{ __('Received Overtime Requests') }}</span>
+                                        <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                    <ul id="dropdown-overtimes" class="hidden py-2 space-y-2 mx-2">
+                                        <li>
+                                            <a href="{{ url(route('departments.index')) }}"
+                                                class="flex items-center p-2 pl-8 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                                <span>{{ __('Incoming') }}</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url(route('departments.index')) }}"
+                                                class="flex items-center p-2 pl-8 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                                <span>{{ __('Accepted') }}</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url(route('departments.index')) }}"
+                                                class="flex items-center p-2 pl-8 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                                <span>{{ __('Rejected') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{--@endunless--}}
+                            {{-- @if (auth()->user()->hasRole(['human_resource', 'sg', 'head'])) --}}
+                                <li>
+                                    <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        href="{{ route('departments.index') }}">
+                                        <span class="mx-2 font-medium">{{ __('Holidays') }}</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        href="{{ route('departments.index') }}">
+                                        <span class="mx-2 font-medium">{{ __('Confessionnels') }}</span>
+                                    </a>
+                                </li>
+                            {{--@endif--}}
+                            {{--@if (auth()->user()->is_supervisor ||
+                                auth()->user()->hasRole(['human_resource', 'sg', 'head']))--}}
+                                <li>
+                                    <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        href="{{ route('departments.index') }}">
+                                        <span class="mx-2 font-medium">{{ __('Calendar') }}</span>
+                                    </a>
+                                </li>
+                            {{--@endif--}}
+                            {{--@if (auth()->user()->hasRole('human_resource'))--}}
+                                <li>
+                                    <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        href="{{ route('departments.index') }}">
+                                        <span class="mx-2 font-medium">{{ __('Notifications') }}</span>
+                                    </a>
+                                </li>
+                            {{--@endif--}}
+                            <li>
+                                <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                    href="{{ route('employees.show', ['employee' => auth()->user()->id]) }}">
+                                    <span class="mx-2 font-medium">{{ __('Show Profile') }}</span>
+                                </a>
+                            </li>
+                            {{--@if (auth()->user()->hasRole(['human_resource', 'sg', 'head']))--}}
+                                <li>
+                                    <button type="button"
+                                        class="flex items-center mx-2 p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        style="width: -webkit-fill-available;" aria-controls="dropdown-reports"
+                                        data-collapse-toggle="dropdown-reports">
+                                        <span class="flex-1 mx-2 text-left whitespace-nowrap font-medium text-white"
+                                            sidebar-toggle-item>{{ __('Reports') }}</span>
+                                        <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </button>
+                                    <ul id="dropdown-reports" class="hidden py-2 space-y-2 mx-2">
+                                        <li>
+                                            <a href="{{ url(route('departments.index')) }}"
+                                                class="flex items-center p-2 pl-8 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                                <span>{{ __('Leaves') }}</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url(route('departments.index')) }}"
+                                                class="flex items-center p-2 pl-8 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                                <span>{{ __('Overtimes') }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {{--@endif--}}
+                            <li>
+                                <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                   href="{{ route('departments.index') }}">
+                                    <span class="mx-2 font-medium">{{ __('Holidays And Confessionnels') }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+
+            <div class="lg:pt-8 w-full h-full overflow-y-auto sm:pt-0 lg:mx-4 sm:mx-0">
+                <nav class="w-full bg-white border-b-2 border-indigo-600 flex justify-between">
+                    <div class="flex flex-col py-2">
+                        <div class="px-2 text-xl font-bold text-black">
+                            {{ auth()->user()->employee->full_name }} {{ auth()->user()->employee->full_name }}
+                        </div>
+                        <div class="px-2 text-md italic text-black">
+                            {{-- (implode(' | ', auth()->user()->getRoleNamesCustom())) --}}
+                            {{auth()->user()->employee->role}}
+                        </div>
+                    </div>
+                    <div class="flex mx-2">
+                         <div class="flex justify-center items-center">
+                           {{-- <livewire:megaphone></livewire:megaphone> --}}
+                        </div>
+
+                        <div class="py-3 text-xl font-bold text-black">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit">
+                                    <i class="fa-solid fa-right-from-bracket"></i> {{ __('Logout') }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+                @include('flash-messages.error-flash-message')
+                <div>
+                    {{ $slot }}
+                </div>
+            </div>
+        </div>
     </div>
-</aside>
+    <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+
+    @livewireScripts
+</body>
+
+</html>

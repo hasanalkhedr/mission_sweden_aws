@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             MissionOrderSeeder::class,
             MissionApproveSeeder::class,
             ExpenseSeeder::class,
+            DepartmentManagerSeeder::class,
         ]);
     }
 }

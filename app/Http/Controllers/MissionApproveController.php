@@ -4,88 +4,144 @@ namespace App\Http\Controllers;
 
 use App\Models\MissionApprove;
 use App\Models\MissionOrder;
+use App\Models\user;
+use App\Notifications\MemoireMissionOrderApproveNotification;
+use App\Notifications\MemoireMissionOrderLevelNotification;
+use App\Notifications\MissionOrderApproveNotification;
+use App\Notifications\MissionOrderLevelNotification;
 use Illuminate\Http\Request;
 
 class MissionApproveController extends Controller
 {
-    public function supervisor_approve(MissionOrder $missionOrder)
+    public function approve(Request $request, MissionOrder $missionOrder)
     {
-        if ($missionOrder->approvals->where('approval_role', '=', 'supervisor')->first()) {
-            $missionApprove = $missionOrder->approvals->where('approval_role', '=', 'supervisor')->first();
-            //return view('mission_approves.edit', compact('missionApprove', 'missionOrder'));
-            return redirect()->route('mission_approves.edit', ['mission_approve' => $missionApprove]);
+        $action = $request->input('action');
+        $newStatus = '';
+        switch ($action) {
+            case 'review':
+                $newStatus = 'draft';
+                break;
+            case 'reject':
+                $newStatus = 'rejected';
+                break;
+            case 'approve':
+                switch ($missionOrder->status) {
+                    case 'sup_approve':
+                        $newStatus = 'hr_approve';
+                        break;
+                    case 'hr_approve':
+                        $newStatus = 'sg_approve';
+                        break;
+                    case 'sg_approve':
+                        $newStatus = 'approved';
+                        break;
+                }
+                break;
         }
-        return view('mission_approves.create', compact('missionOrder'));
-    }
-    public function hr_approve(MissionOrder $missionOrder)
-    {
-        if ($missionOrder->approvals->where('approval_role', '=', 'hr')->first()) {
-            $missionApprove = $missionOrder->approvals->where('approval_role', '=', 'hr')->first();
-            //return view('mission_approves.edit', compact('missionApprove', 'missionOrder'));
-            return redirect()->route('mission_approves.edit', ['mission_approve' => $missionApprove]);
-        }
-        return view('mission_approves.create', compact('missionOrder'));
-    }
-    public function sg_approve(MissionOrder $missionOrder)
-    {
-        if ($missionOrder->approvals->where('approval_role', '=', 'sg')->first()) {
-            $missionApprove = $missionOrder->approvals->where('approval_role', '=', 'sg')->first();
-            //return view('mission_approves.edit', compact('missionApprove', 'missionOrder'));
-            return redirect()->route('mission_approves.edit', ['mission_approve' => $missionApprove]);
-        }
-        return view('mission_approves.create', compact('missionOrder'));
-    }
-    public function index()
-    {
-        $approvals = MissionApprove::with('missionOrder', 'employee')->get();
-        return view('mission_approves.index', compact('approvals'));
-    }
-
-    public function show(MissionApprove $missionApprove)
-    {
-        return view('mission_approves.show', compact('missionApprove'));
-    }
-    public function create()
-    {
-        $missionOrders = MissionOrder::all();
-        return view('mission_approves.create', compact('missionOrders'));
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'status' => 'required|in:sup_approve,hr_approve,sg_approve,rejected,draft',
+        $missionApprove = MissionApprove::create([
+            'mission_order_id' => $missionOrder->id,
+            'approval_id' => auth()->user()->employee->id,
+            'approval_role' => auth()->user()->employee->role,
+            'comment' => $request->input('comment'),
+            'status' => $newStatus,
         ]);
-        $missionOrderId = $request->input('mission_order_id');
-        $missionOrder = MissionOrder::find($missionOrderId);
-        $missionOrder->status = $request->input('status');
+        $missionOrder->status = $newStatus;
         $missionOrder->save();
-        MissionApprove::create($request->all());
+        $notification = new MissionOrderApproveNotification(
+            $missionOrder,
+            $missionApprove,
+        );
+        $missionOrder->employee->user->notify($notification);
+
+        $notification = new MissionOrderLevelNotification($missionOrder);
+        switch ($missionOrder->status) {
+            case 'sup_approve':
+                $missionOrder->employee->department->manager->user->notify($notification);
+                break;
+            case 'hr_approve':
+                $users = User::whereHas('employee', function ($query) {
+                    $query->where('role', 'hr');
+                })->get();
+                foreach ($users as $user) {
+                    $user->notify($notification);
+                }
+                break;
+            case 'sg_approve':
+                $users = User::whereHas('employee', function ($query) {
+                    $query->where('role', 'sg');
+                })->get();
+                foreach ($users as $user) {
+                    $user->notify($notification);
+                }
+                break;
+        }
         return redirect()->route('mission_orders.index');
     }
-
-    public function edit(MissionApprove $missionApprove)
+    public function m_approve(Request $request, MissionOrder $missionOrder)
     {
-        return view('mission_approves.edit', compact('missionApprove'));
-    }
-
-    public function update(Request $request, MissionApprove $missionApprove)
-    {
-        $request->validate([
-            'status' => 'required|in:sup_approve,hr_approve,sg_approve,rejected,draft',
+        $action = $request->input('action');
+        $newStatus = '';
+        switch ($action) {
+            case 'review':
+                $newStatus = 'draft';
+                break;
+            case 'reject':
+                $newStatus = 'rejected';
+                break;
+            case 'approve':
+                switch ($missionOrder->memor_status) {
+                    case 'sup_approve':
+                        $newStatus = 'hr_approve';
+                        break;
+                    case 'hr_approve':
+                        $newStatus = 'sg_approve';
+                        break;
+                    case 'sg_approve':
+                        $newStatus = 'approved';
+                        break;
+                }
+                break;
+        }
+        $missionApprove = MissionApprove::create([
+            'mission_order_id' => $missionOrder->id,
+            'approval_id' => auth()->user()->employee->id,
+            'approval_role' => auth()->user()->employee->role,
+            'comment' => $request->input('comment'),
+            'memor_status' => $newStatus,
         ]);
 
-        $missionApprove->missionOrder->status = $request->input('status');
-        $missionApprove->missionOrder->save();
-        $missionApprove->update($request->all());
-        $missionApprove->save();
-        return redirect()->route('mission_orders.index');
-    }
+        $missionOrder->memor_status = $newStatus;
+        $missionOrder->save();
 
-    public function destroy(MissionApprove $missionApprove)
-    {
-        $missionApprove->delete();
+        $notification = new MemoireMissionOrderApproveNotification(
+            $missionOrder,
+            $missionApprove,
+        );
+        $missionOrder->employee->user->notify($notification);
 
-        return redirect()->route('mission_approves.index');
+        $notification = new MemoireMissionOrderLevelNotification($missionOrder);
+        switch ($missionOrder->memor_status) {
+            case 'sup_approve':
+                $missionOrder->employee->department->manager->user->notify($notification);
+                break;
+            case 'hr_approve':
+                $users = User::whereHas('employee', function ($query) {
+                    $query->where('role', 'hr');
+                })->get();
+                foreach ($users as $user) {
+                    $user->notify($notification);
+                }
+                break;
+            case 'sg_approve':
+                $users = User::whereHas('employee', function ($query) {
+                    $query->where('role', 'sg');
+                })->get();
+                foreach ($users as $user) {
+                    $user->notify($notification);
+                }
+                break;
+        }
+
+        return redirect()->route('mission_orders.m_index');
     }
 }

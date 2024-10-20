@@ -7,7 +7,11 @@
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.9",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "mbarlow/megaphone": "^2.1",
+        "symfony/http-client": "^7.1",
+        "symfony/postmark-mailer": "^7.1",
+        "wildbit/postmark-php": "^6.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
