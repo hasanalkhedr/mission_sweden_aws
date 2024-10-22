@@ -101,9 +101,9 @@ class Tournee extends Model
     }
     public function getMemoireTotals()
     {
-        
+
         $expensesTotals = $this->getExpensesByCurrency();
-        $ex = $expensesTotals[$this->bareme->currency];
+        $ex = $expensesTotals[$this->bareme->currency] ?? 0;
         $expensesTotals[$this->bareme->currency] = $ex + $this->total_amount-$this->advance;
         return $expensesTotals;
         //return array_merge($expensesTotals, [$this->bareme->currency => $this->total_amount-$this->advance]);

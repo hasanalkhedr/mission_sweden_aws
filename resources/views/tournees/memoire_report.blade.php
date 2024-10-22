@@ -7,7 +7,7 @@
                 <div class="flex flex-wrap -mx-3 mb-2">
                     <x-application-logo class="w-2/5"></x-application-logo>
                     <div class="w-3/5 px-10 mt-10 mb-6 md:mb-0 text-end">
-                        <p>Beyrouth, {{ $tournee->order_date->format('d/m/Y') }}</p>
+                        <p>Beyrouth, {{ $tournee->memor_date->format('d/m/Y') }}</p>
                     </div>
                     <div class="w-full px-3 mt-4 mb-2 md:mb-0 text-center">
                         <h3 class="text-lg font-semibold">MÉMOIRE DE FRAIS</h3>

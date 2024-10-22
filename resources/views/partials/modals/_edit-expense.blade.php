@@ -51,7 +51,7 @@
                             <div class="flex flex-wrap -mx-3 mb-0">
                                 <x-label>Montant<span
                                         class="text-red-500">*</span></x-label>
-                                <x-text-input type="number" required
+                                <x-text-input type="number" step="any" required
                                     name="amount"
                                     value="{{ old('amount', $expense->amount) }}" />
                             </div>
@@ -78,7 +78,7 @@
                                     <input type="file" name="expense_document"
                                         id="expense_document-edit-{{ $expense->id }}"
                                         class="hidden"
-                                        onchange="previewImage-edit-{{ $expense->id }}(event)">
+                                        onchange="previewImage_edit_{{ $expense->id }}(event)">
                                     <button type="button"
                                         onclick="document.getElementById('expense_document-edit-{{ $expense->id }}').click()"
                                         class="text-white bg-blue-600 hover:bg-blue-700 rounded-xl w-1/2">
@@ -88,7 +88,7 @@
                                 </div>
                                 <!-- Image Preview Script -->
                                 <script>
-                                    function previewImage - edit - {{ $expense->id }}(event) {
+                                    function previewImage_edit_{{ $expense->id }}(event) {
                                         const reader = new FileReader();
                                         reader.onload = function() {
                                             const output = document.getElementById('expenseDocumentPreview-edit-{{ $expense->id }}');

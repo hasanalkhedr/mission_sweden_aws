@@ -59,9 +59,9 @@
                         <ul class="content-between space-y-2">
                             <!-- Mission Menu -->
                             <li>
-                                <a href="{{ route('mission_orders.index') }}">
+                                {{-- <a href="{{ route('mission_orders.index') }}"> --}}
                                     <button type="button"
-                                        class="flex items-center mx-2 p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        class="flex items-center mx-2 p-2 w-full text-2xl font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                         style="width: -webkit-fill-available;" aria-controls="dropdown-missions"
                                         data-collapse-toggle="dropdown-missions">
                                         <span class="flex-1 mx-2 text-left font-medium text-white"
@@ -73,18 +73,24 @@
                                                 clip-rule="evenodd"></path>
                                         </svg> --}}
                                     </button>
-                                </a>
+                                {{-- </a> --}}
                                 <ul id="dropdown-missions-" class="py-2 space-y-2 mx-2">
                                     <li>
                                         <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                             href="{{ route('mission_orders.create') }}">
-                                            <span class="mx-2 font-medium">{{ __('Ordre de Mission') }}</span>
+                                            <span class="mx-2 font-medium">{{ __('Nouvelle demande') }}</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                            href="{{ route('mission_orders.index') }}">
+                                            <span class="mx-2 font-medium">{{ __('Ordres de missions') }}</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                             href="{{ route('mission_orders.m_index') }}">
-                                            <span class="mx-2 font-medium">{{ __('Mémoire de Frais') }}</span>
+                                            <span class="mx-2 font-medium">{{ __('Mémoires de Frais') }}</span>
                                         </a>
                                     </li>
                                     {{-- <li>
@@ -98,9 +104,9 @@
                             <hr />
                             <!-- Tournees Menu -->
                             <li>
-                                <a href="{{ route('tournees.index') }}">
+                                {{-- <a href="{{ route('tournees.index') }}"> --}}
                                     <button type="button"
-                                        class="flex items-center mx-2 p-2 w-full text-base font-normal text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                        class="flex items-center mx-2 p-2 w-full text-2xl font-bold  text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                         style="width: -webkit-fill-available;" aria-controls="dropdown-tournees"
                                         data-collapse-toggle="dropdown-tournees">
                                         <span class="flex-1 mx-2 text-left font-medium text-white"
@@ -111,18 +117,25 @@
                                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                                 clip-rule="evenodd"></path>
                                         </svg> --}}
-                                    </button></a>
+                                    </button>
+                                {{-- </a> --}}
                                 <ul id="dropdown-tournees-" class=" py-2 space-y-2 mx-2">
                                     <li>
                                         <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                             href="{{ route('tournees.create') }}">
-                                            <span class="mx-2 font-medium">{{ __('Ordre de Tournee') }}</span>
+                                            <span class="mx-2 font-medium">{{ __('Nouvelle demande') }}</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
+                                            href="{{ route('tournees.index') }}">
+                                            <span class="mx-2 font-medium">{{ __('Ordres de missions') }}</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                             href="{{ route('tournees.m_index') }}">
-                                            <span class="mx-2 font-medium">{{ __('Mémoire de Frais/Tournee') }}</span>
+                                            <span class="mx-2 font-medium">{{ __('Mémoires de Frais/Tournee') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -136,23 +149,23 @@
                                 </a>
                             </li>
                             <hr />
-                            @if(auth()->user()->employee->role !== 'employee')
-                            <!-- Calender Item -->
-                            <li>
-                                <a href="#"
-                                    class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
-                                    <span class="mx-2 font-medium">{{ __('Calendrier') }}</span>
-                                </a>
-                            </li>
-                            <hr />
-                            <!-- Reports Item -->
-                            <li>
-                                <a href="#"
-                                    class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
-                                    <span class="mx-2 font-medium">{{ __('Rapports') }}</span>
-                                </a>
-                            </li>
-                            <hr />
+                            @if (auth()->user()->employee->role !== 'employee')
+                                <!-- Calender Item -->
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                        <span class="mx-2 font-medium">{{ __('Calendrier') }}</span>
+                                    </a>
+                                </li>
+                                <hr />
+                                <!-- Reports Item -->
+                                <li>
+                                    <a href="#"
+                                        class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
+                                        <span class="mx-2 font-medium">{{ __('Rapports') }}</span>
+                                    </a>
+                                </li>
+                                <hr />
                             @endif
                             <!-- Settings Menu -->
                             @if (auth()->user()->employee->role != 'employee')
@@ -218,7 +231,7 @@
                             </div>
                             <div class="px-2  text-md italic text-black">
                                 {{-- (implode(' | ', auth()->user()->getRoleNamesCustom())) --}}
-                                {{ config('globals.roles.'.auth()->user()->employee->role) }}
+                                {{ config('globals.roles.' . auth()->user()->employee->role) }}
                             </div>
                         </div>
                         <div class="flex mx-2">

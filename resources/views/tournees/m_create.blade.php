@@ -138,7 +138,7 @@
                 <x-label>
                     Avance sur IJM (EURO ou USD)<span class="text-red-500">*</span>
                 </x-label>
-                <x-text-input type="number" name="advance" value="{{ old('advance',$tournee->advance) }}" />
+                <x-text-input type="number" step="any" name="advance" value="{{ old('advance',$tournee->advance) }}" />
             </div>
             <div class="w-1/2 px-3">
                 <x-label>{{__('Submit Values before add expenses')}}</x-label>
@@ -207,4 +207,5 @@
         </div>
     </form>
     @include('partials.modals._tournee-create-expense')
+
 @endsection
