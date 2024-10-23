@@ -69,9 +69,14 @@ class TourneeExpenseController extends Controller
     }
 
     public function download_document(TourneeExpense $expense) {
-        if (!Storage::exists($expense->expense_document)) {
-            abort(404, 'File not found.');
-        }
-        return Storage::download($expense->expense_document);
+        $filePath = $expense->expense_document;
+
+    // Ensure the file exists
+    if (!Storage::disk('public')->exists($filePath)) {
+        abort(404, 'File not found.');
+    }
+
+    // Download the file from the 'public' disk
+    return Storage::disk('public')->download($filePath);
     }
 }
