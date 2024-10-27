@@ -4,8 +4,8 @@
 @section('content')
     <div id="report-content">
         <div class="bg-white w-4/5 mx-auto py-1 sm:px-2 lg:px-4 printable">
-            <div class="bg-white shadow-md rounded-lg p-2 ml-4">
-                <div class="flex flex-wrap -mx-3 mb-2">
+            <div class="bg-white p-2">
+                <div class="flex flex-wrap mb-2">
                     <x-application-logo class="w-2/5"></x-application-logo>
                     <div class="w-3/5 px-10 mt-10 mb-6 md:mb-0 text-end">
                         <p>Beyrouth, {{ $missionOrder->memor_date->format('d/m/Y') }}</p>
@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table-auto w-full text-left ml-4">
+            <table class="table-auto w-full text-left">
                 <thead>
                     <tr class="bg-blue-200">
                         <th colspan="4" class="px-4">Mission</th>
@@ -71,7 +71,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="table-auto w-full text-left ml-4">
+            <table class="table-auto w-full text-left">
                 <thead>
                     <tr class="bg-blue-200">
                         <th colspan="2" class="px-4">Calcul des Indemnités Journalières de Mission</th>
@@ -85,7 +85,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="table-auto w-full text-left ml-4">
+            <table class="table-auto w-full text-left">
                 <thead>
                     <tr class="bg-blue-200">
                         <th class="px-4">Remboursement de frais de transport et frais divers sur justificatifs</th>
@@ -171,7 +171,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="table-auto w-full text-left ml-4">
+            <table class="table-auto w-full text-left">
                 <thead>
                     <tr class="bg-blue-200">
                         <th colspan="2" class="px-4">Montant total du remboursement (IJM + FRAIS DIVERS - AVANCE)</th>
@@ -214,7 +214,7 @@
                         </td>
                 </tbody>
             </table>
-            <table class="table-auto w-full text-left ml-4">
+            <table class="table-auto w-full text-left">
                 @if (count($missionOrder->getMemoireTotals()) === 1)
                     <tr>
                         <td class="w-1/3 py-1">ARRETE ET LIQUIDE LA SOMME DE :</td>
@@ -266,7 +266,7 @@
                     </table>
                 </div>
             </div> --}}
-            <table class="table-auto w-full text-left ml-4">
+            <table class="table-auto w-full text-left">
                 <thead>
                     <tr class="bg-blue-200">
                         <th class="w-5/12 px-4">Signature du bénéficiaire</th>

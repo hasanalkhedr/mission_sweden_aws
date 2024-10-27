@@ -5,8 +5,8 @@
 @section('content')
     <div class="bg-white max-w-4xl mx-auto py-10 sm:px-6 lg:px-8 printable">
         <div id="report-content">
-            <div class="bg-white shadow-md rounded-lg p-6">
-                <div class="flex flex-wrap -mx-3 mb-2">
+            <div class="bg-white p-6">
+                <div class="flex flex-wrap mb-2">
                     <x-application-logo class="w-2/5"></x-application-logo>
                     <div class="w-3/5 px-10 mt-10 mb-6 md:mb-0 text-end">
                         <p>Beyrouth, {{ $tournee->order_date->format('d/m/Y') }}</p>
@@ -15,7 +15,7 @@
                         <h3 class="text-lg font-semibold">ORDRE DE TOURNEE {{ $tournee->order_number }}</h3>
                     </div>
                 </div>
-                <table class="table-auto w-full text-left ml-4">
+                <table class="table-auto w-full text-left">
                     <thead>
                         <tr class="bg-blue-200">
                             <th colspan="2" class="px-4">Tourneeary</th>
@@ -38,7 +38,7 @@
 
                     </tbody>
                 </table>
-                <table class="table-auto w-full text-left ml-4">
+                <table class="table-auto w-full text-left">
                     <thead>
                         <tr class="bg-blue-200">
                             <th colspan="2" class="px-4">Tournee</th>
@@ -69,7 +69,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table-auto w-full text-left ml-4">
+                <table class="table-auto w-full text-left">
                     <thead>
                         <tr class="bg-blue-200">
                             <th class="px-4">Pays de Tournee</th>
@@ -86,7 +86,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table-auto w-full text-left ml-4">
+                <table class="table-auto w-full text-left">
                     <thead>
                         <tr class="bg-blue-200">
                             <th colspan="2" class="px-4">Frais de tournee</th>
@@ -106,7 +106,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table-auto w-full text-left ml-4">
+                <table class="table-auto w-full text-left">
                     <thead>
                         <tr class="bg-blue-200">
                             <th colspan="2" class="px-4">Observations</th>
@@ -119,7 +119,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table class="table-auto w-full text-left ml-4">
+                <table class="table-auto w-full text-left">
                     <thead>
                         <tr class="bg-blue-200">
                             <th colspan="2" class="px-4">Signature de l'autorité compétente</th>
