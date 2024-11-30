@@ -45,7 +45,7 @@
                     </th>
                     {{-- @if (auth()->user()->hasRole('human_resource')) --}}
                     <th colspan="2" scope="col" class="py-3 px-6 blue-color text-center">Actions des
-                        {{ config('globals.roles.'.auth()->user()->employee->role) }}
+                        {{ config('globals.roles.' . auth()->user()->employee->role) }}
                     </th>
                 </tr>
             </thead>

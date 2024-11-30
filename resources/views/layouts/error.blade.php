@@ -396,7 +396,6 @@
                     </div>
                     <div class="flex mx-2">
                         <div class="py-3 pr-6 text-xl font-bold">
-                            <livewire:megaphone />
                         </div>
 
                         <div class="py-6 text-xl font-bold text-black">

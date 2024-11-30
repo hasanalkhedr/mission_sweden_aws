@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BaremeController;
+use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TourneeApproveController;
 use App\Http\Controllers\TourneeController;
@@ -99,6 +100,8 @@ Route::resource('departments', DepartmentController::class)->middleware(['auth',
 // Baremes routes
 Route::resource('baremes', BaremeController::class)->middleware(['auth', 'role:hr,sg,supervisor']);
 });
+
+Route::get('/calender',CalenderController::class)->name('calender');
 // Authentication routes (Laravel Breeze)
 require __DIR__ . '/auth.php';
 

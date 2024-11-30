@@ -134,7 +134,7 @@
                         @if (auth()->user()->employee->role !== 'employee')
                             <!-- Calender Item -->
                             <li>
-                                <a href="#"
+                                <a href="{{route('calender')}}"
                                     class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
                                     <span class="mx-2 font-medium">{{ __('Calendrier') }}</span>
                                 </a>
@@ -312,7 +312,7 @@
                     @if (auth()->user()->employee->role !== 'employee')
                         <!-- Calender Item -->
                         <li>
-                            <a href="#"
+                            <a href="{{route('calender')}}"
                                 class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
                                 <span class="mx-2 font-medium">{{ __('Calendrier') }}</span>
                             </a>
