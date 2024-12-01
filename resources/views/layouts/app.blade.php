@@ -20,12 +20,18 @@
         integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
+    integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css"
+        integrity="sha512-MQXduO8IQnJVq1qmySpN87QQkiR1bZHtorbJBD0tzy7/0U9+YIC93QWHeGTEoojMVHWWNkoCp8V6OzVSYrX0oQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('head')
@@ -131,24 +137,25 @@
                             </a>
                         </li>
                         <hr />
-                        @if (auth()->user()->employee->role !== 'employee')
+
                             <!-- Calender Item -->
                             <li>
-                                <a href="{{route('calender')}}"
+                                <a href="{{route('calendar')}}"
                                     class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
                                     <span class="mx-2 font-medium">{{ __('Calendrier') }}</span>
                                 </a>
                             </li>
                             <hr />
                             <!-- Reports Item -->
+
                             <li>
-                                <a href="#"
+                                <a href="{{route('reports.index')}}"
                                     class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
                                     <span class="mx-2 font-medium">{{ __('Rapports') }}</span>
                                 </a>
                             </li>
                             <hr />
-                        @endif
+
                         <!-- Settings Menu -->
                         @if (auth()->user()->employee->role != 'employee')
                             <li>
@@ -309,24 +316,25 @@
                         </a>
                     </li>
                     <hr />
-                    @if (auth()->user()->employee->role !== 'employee')
+
                         <!-- Calender Item -->
                         <li>
-                            <a href="{{route('calender')}}"
+                            <a href="{{route('calendar')}}"
                                 class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
                                 <span class="mx-2 font-medium">{{ __('Calendrier') }}</span>
                             </a>
                         </li>
                         <hr />
                         <!-- Reports Item -->
+
                         <li>
-                            <a href="#"
+                            <a href="{{route('reports.index')}}"
                                 class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500">
                                 <span class="mx-2 font-medium">{{ __('Rapports') }}</span>
                             </a>
                         </li>
                         <hr />
-                    @endif
+
                     <!-- Settings Menu -->
                     @if (auth()->user()->employee->role != 'employee')
                         <li>
@@ -428,10 +436,8 @@
         </script>
 
         <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"
-            integrity="sha512-K/oyQtMXpxI4+K0W7H25UopjM8pzq0yrVdFdG21Fh5dBe91I40pDd9A4lzNlHPHBIP2cwZuoxaUSX0GJSObvGA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://npmcdn.com/flatpickr/dist/l10n/fr.js"></script>
+
+
         {{--
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}

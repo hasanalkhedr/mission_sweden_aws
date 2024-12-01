@@ -17,4 +17,12 @@ class Department extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+    public function missionOrders()
+    {
+        return $this->hasManyThrough(MissionOrder::class,Employee::class);
+    }
+    public function tournees()
+    {
+        return $this->hasManyThrough(Tournee::class,Employee::class);
+    }
 }

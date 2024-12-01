@@ -98,71 +98,71 @@
                                 <div class="-m-1.5 overflow-x-auto">
                                     <div class="p-1.5 min-w-full inline-block align-middle">
                                         <div class="overflow-hidden">
-<table class="min-w-full divide-y divide-gray-200 border border-gray-300">
-<thead>
-    <tr>
-        <th scope="col"
-            class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
-            Nature de
-            la dépense</th>
-        <th scope="col"
-            class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
-            Date
-            dépense</th>
-        <th scope="col"
-            class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
-            Montant</th>
-        <th scope="col"
-            class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
-            Devise</th>
-    </tr>
-</thead>
-<tbody>
-    @forelse ($missionOrder->expenses as $expense)
-        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
-            <td
-                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm font-medium text-gray-800">
-                {{ $expense->description }}</td>
-            <td
-                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
-                {{ $expense->expense_date->format('d/m/Y H:i') }}</td>
-            <td
-                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
-                {{ $expense->amount }}</td>
-            <td
-                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
-                {{ $expense->currency }}</td>
-        </tr>
-    @empty
-        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
-            <td colspan="4"
-                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm font-medium text-gray-800">
-                {{ __('No Expenses Found') }}</td>
-        </tr>
-    @endforelse
-</tbody>
-<tfoot>
-    @forelse ($missionOrder->getExpensesByCurrency() as $currency=>$currencyAmount)
-        <tr>
-            <th scope="col"></th>
-            <th scope="col"
-                class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
-                SOMME
-            </th>
-            <th scope="col"
-                class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
-                {{ $currencyAmount }}
-            </th>
-            <th scope="col"
-                class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
-                {{ $currency }}
-            </th>
-            <th scope="col"></th>
-        </tr>
-    @empty
-    @endforelse
-</tfoot>
-</table>
+                                            <table class="min-w-full divide-y divide-gray-200 border border-gray-300">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"
+                                                            class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
+                                                            Nature de
+                                                            la dépense</th>
+                                                        <th scope="col"
+                                                            class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
+                                                            Date
+                                                            dépense</th>
+                                                        <th scope="col"
+                                                            class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
+                                                            Montant</th>
+                                                        <th scope="col"
+                                                            class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
+                                                            Devise</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @forelse ($missionOrder->expenses as $expense)
+                                                        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
+                                                            <td
+                                                                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm font-medium text-gray-800">
+                                                                {{ $expense->description }}</td>
+                                                            <td
+                                                                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
+                                                                {{ $expense->expense_date->format('d/m/Y H:i') }}</td>
+                                                            <td
+                                                                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
+                                                                {{ $expense->amount }}</td>
+                                                            <td
+                                                                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
+                                                                {{ $expense->currency }}</td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
+                                                            <td colspan="4"
+                                                                class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm font-medium text-gray-800">
+                                                                {{ __('No Expenses Found') }}</td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                                <tfoot>
+                                                    @forelse ($missionOrder->getExpensesByCurrency() as $currency=>$currencyAmount)
+                                                        <tr>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"
+                                                                class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                SOMME
+                                                            </th>
+                                                            <th scope="col"
+                                                                class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                {{ $currencyAmount }}
+                                                            </th>
+                                                            <th scope="col"
+                                                                class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                {{ $currency }}
+                                                            </th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                    @empty
+                                                    @endforelse
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -181,35 +181,35 @@
                     <tr>
                         <td class="w-full py-1" colspan="2">
                             <table class="border border-gray-500 table-auto text-center w-full">
-<tr>
-<td rowspan="2" class="w-1/3 border border-gray-500">Totaux</td>
-<td class="border border-gray-500 w-2/12">IJM</td>
-<td class="border border-gray-500 w-2/12">Frais divers</td>
-<td class="border border-gray-500 w-2/12">Avance</td>
-<td class="border border-gray-500 w-2/12">Net à payer</td>
-</tr>
-<tr>
-<td class="border border-gray-500 w-2/12">{{ $missionOrder->total_amount }}</td>
-<td class="border border-gray-500 w-2/12">
-    <ul>
-        @forelse ($missionOrder->getExpensesByCurrency() as $currency=>$currencyAmount)
-            <li>{{ $currencyAmount }} {{ $currency }}</li>
-        @empty
-            <li>0.00</li>
-        @endforelse
-    </ul>
-</td>
-<td class="border border-gray-500 w-2/12">{{ $missionOrder->advance }}</td>
-<td class="border border-gray-500 w-2/12">
-    <ul>
-        @forelse ($missionOrder->getMemoireTotals() as $currency=>$currencyAmount)
-            <li>{{ $currencyAmount }} {{ $currency }}</li>
-        @empty
-            <li>0.00</li>
-        @endforelse
-    </ul>
-</td>
-</tr>
+                                <tr>
+                                    <td rowspan="2" class="w-1/3 border border-gray-500">Totaux</td>
+                                    <td class="border border-gray-500 w-2/12">IJM</td>
+                                    <td class="border border-gray-500 w-2/12">Frais divers</td>
+                                    <td class="border border-gray-500 w-2/12">Avance</td>
+                                    <td class="border border-gray-500 w-2/12">Net à payer</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-500 w-2/12">{{ $missionOrder->total_amount }}</td>
+                                    <td class="border border-gray-500 w-2/12">
+                                        <ul>
+                                            @forelse ($missionOrder->getExpensesByCurrency() as $currency=>$currencyAmount)
+                                                <li>{{ $currencyAmount }} {{ $currency }}</li>
+                                            @empty
+                                                <li>0.00</li>
+                                            @endforelse
+                                        </ul>
+                                    </td>
+                                    <td class="border border-gray-500 w-2/12">{{ $missionOrder->advance }}</td>
+                                    <td class="border border-gray-500 w-2/12">
+                                        <ul>
+                                            @forelse ($missionOrder->getMemoireTotals() as $currency=>$currencyAmount)
+                                                <li>{{ $currencyAmount }} {{ $currency }}</li>
+                                            @empty
+                                                <li>0.00</li>
+                                            @endforelse
+                                        </ul>
+                                    </td>
+                                </tr>
                             </table>
                         </td>
                 </tbody>
