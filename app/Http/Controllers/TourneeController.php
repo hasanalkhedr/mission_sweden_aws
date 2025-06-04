@@ -21,20 +21,20 @@ class TourneeController extends Controller
             case 'employee':
                 $tournees = Tournee::where('employee_id', '=', auth()->user()->employee->id)->when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->paginate(10);
+                })->orderBy('id', 'desc')->paginate(10);
                 break;
             case 'supervisor':
                 $tournees = Tournee::whereHas('employee', function ($query) {
                     $query->where('department_id', auth()->user()->employee->department_id);
                 })->when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->paginate(10);
+                })->orderBy('id', 'desc')->paginate(10);
                 break;
             case 'hr':
             case 'sg':
                 $tournees = Tournee::when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->paginate(10);
+                })->orderBy('id', 'desc')->paginate(10);
                 break;
             default:
                 $tournees = null;
@@ -92,7 +92,7 @@ class TourneeController extends Controller
         if ($action === 'draft') {
             $status = 'draft';
         } else if ($action === 'submit') {
-            switch (Auth::user()->employee->role) {
+/*            switch (Auth::user()->employee->role) {
                 case 'employee':
                     $status = 'sup_approve';
                     break;
@@ -113,7 +113,9 @@ class TourneeController extends Controller
                     $status = 'sg_approve';
                     break;
             }
-        }
+*/
+$status = 'approved';  
+      }
         $tournee = Tournee::create(array_merge($request->all(), ['status' => $status]));
         $notification = new TourneeLevelNotification($tournee);
         switch ($tournee->status) {
@@ -129,6 +131,7 @@ class TourneeController extends Controller
                 }
                 break;
             case 'sg_approve':
+case 'approved':
                 $users = User::whereHas('employee', function ($query) {
                     $query->where('role', 'sg');
                 })->get();
@@ -170,7 +173,7 @@ class TourneeController extends Controller
         if ($action === 'draft') {
             $status = 'draft';
         } else if ($action === 'submit') {
-            switch (Auth::user()->employee->role) {
+        /*    switch (Auth::user()->employee->role) {
                 case 'employee':
                     $status = 'sup_approve';
                     break;
@@ -190,7 +193,8 @@ class TourneeController extends Controller
                 case 'sg':
                     $status = 'sg_approve';
                     break;
-            }
+            }*/
+$status = 'approved';
         }
         $tournee->update(array_merge($request->all(), ['status' => $status]));
         $notification = new TourneeLevelNotification($tournee);
@@ -207,7 +211,8 @@ class TourneeController extends Controller
                 }
                 break;
             case 'sg_approve':
-                $users = User::whereHas('employee', function ($query) {
+case 'approved':               
+ $users = User::whereHas('employee', function ($query) {
                     $query->where('role', 'sg');
                 })->get();
                 foreach ($users as $user) {
@@ -245,20 +250,20 @@ class TourneeController extends Controller
                 $tournees = Tournee::where('employee_id', '=', auth()->user()->employee->id)
                     ->where('status', 'like', 'approved')->when($search, function ($query, $search) {
                         return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                    })->paginate(10);
+                    })->orderBy('id', 'desc')->paginate(10);
                 break;
             case 'supervisor':
                 $tournees = Tournee::whereHas('employee', function ($query) {
                     $query->where('department_id', auth()->user()->employee->department_id);
                 })->where('status', 'like', 'approved')->when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->paginate(10);
+                })->orderBy('id', 'desc')->paginate(10);
                 break;
             case 'hr':
             case 'sg':
                 $tournees = Tournee::when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->where('status', 'like', 'approved')->paginate(10);
+                })->where('status', 'like', 'approved')->orderBy('id', 'desc')->paginate(10);
                 break;
             default:
                 $tournees = null;
@@ -304,7 +309,7 @@ class TourneeController extends Controller
         if ($action === 'draft') {
             $memor_status = 'draft';
         } else if ($action === 'submit') {
-            switch (Auth::user()->employee->role) {
+           /* switch (Auth::user()->employee->role) {
                 case 'employee':
                     $memor_status = 'sup_approve';
                     break;
@@ -324,7 +329,8 @@ class TourneeController extends Controller
                 case 'sg':
                     $memor_status = 'sg_approve';
                     break;
-            }
+            }*/
+$memor_status = 'approved';
         }
         $tournee->update(array_merge($request->all(), ['memor_status' => $memor_status]));
 
@@ -342,7 +348,8 @@ class TourneeController extends Controller
                 }
                 break;
             case 'sg_approve':
-                $users = User::whereHas('employee', function ($query) {
+case 'approved':               
+ $users = User::whereHas('employee', function ($query) {
                     $query->where('role', 'sg');
                 })->get();
                 foreach ($users as $user) {

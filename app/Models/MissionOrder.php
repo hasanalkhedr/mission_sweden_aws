@@ -11,6 +11,27 @@ class MissionOrder extends Model
 
         static::creating(function ($missionOrder) {
             $missionOrder->order_number = MissionOrder::generateOrderNumber();
+if ($missionOrder->ijm) {
+                //claculate accomodation
+                $missionOrder->no_accomodation = $missionOrder->start_date->diffInDays($missionOrder->end_date);
+
+                if (strtotime($missionOrder->start_time) <= strtotime('05:00 AM')) {
+                    $missionOrder->no_accomodation = $missionOrder->no_accomodation + 1;
+                }
+
+                //calculate meals
+                $missionOrder->no_meals = 2 * ($missionOrder->start_date->diffInDays($missionOrder->end_date) - 1);
+                if (strtotime($missionOrder->start_time) <= strtotime('12:00 PM')) {
+                    $missionOrder->no_meals = $missionOrder->no_meals + 2;
+                } else if (strtotime($missionOrder->start_time) <= strtotime('07:00 PM')) {
+                    $missionOrder->no_meals = $missionOrder->no_meals + 1;
+                }
+                if (strtotime($missionOrder->end_time) >= strtotime('09:00 PM')) {
+                    $missionOrder->no_meals = $missionOrder->no_meals + 2;
+                } else if (strtotime($missionOrder->end_time) >= strtotime('02:00 PM')) {
+                    $missionOrder->no_meals = $missionOrder->no_meals + 1;
+                }
+            }
         });
         static::updating(function ($missionOrder) {
             if ($missionOrder->ijm) {

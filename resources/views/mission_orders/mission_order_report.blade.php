@@ -6,12 +6,16 @@
 @section('content')
 
     <div class="bg-white max-w-4xl mx-auto py-4 sm:px-2 lg:px-4 printable">
-        <div id="report-content">
+        <div id="report-content" style="#report-content {
+     width: 8.27in; /* A4 width */
+     height: 11.69in; /* A4 height */
+     overflow: hidden; /* Prevent content overflow */
+ }">
             <div class="bg-white p-2">
                 <div class="flex flex-wrap mb-2">
                     <x-application-logo class="w-2/5"></x-application-logo>
                     <div class="w-3/5 px-10 mt-10 mb-6 md:mb-0 text-end">
-                        <p>Beyrouth, {{ $missionOrder->order_date->format('d/m/Y') }}</p>
+                        <p>Stockholm, {{ $missionOrder->order_date->format('d/m/Y') }}</p>
                     </div>
                     <div class="w-full px-3 mt-4 mb-2 md:mb-0 text-center">
                         <h3 class="text-lg font-semibold">ORDRE DE MISSION {{ $missionOrder->order_number }}</h3>
@@ -141,12 +145,12 @@
                     <tbody>
                         <tr>
                             <td colspan="2" class="w-full px-28 pt-2 pb-2 justify-end items-end text-right">
-                                <span class="font-bold text-lg w-24 text-center">SCIORTINO Sabine</span>
+                                <span class="font-bold text-lg w-24 text-center">Katerina Doytchinov</span>
                             </td>
                         </tr>
                         <tr>
                             <td colspan="2" class="w-full px-24 pt-0 pb-40 text-right">
-                                <span class="font-light text-md  w-16 text-center">COCAC - Directrice de l'IFL</span>
+                                <span class="font-light text-md  w-16 text-center">COCAC - Directrice de l'IFS</span>
                             </td>
                         </tr>
                     </tbody>
@@ -169,7 +173,7 @@
             var element = document.getElementById('report-content'); // The element you want to print
 
             var opt = {
-                margin: [0.1, 0.3, 0.5, 0.3],
+                margin: 0,
                 filename: "{{ $missionOrder->order_number .
                     '-' .
                     $missionOrder->employee->first_name .

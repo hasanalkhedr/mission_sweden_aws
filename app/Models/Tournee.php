@@ -12,7 +12,28 @@ class Tournee extends Model
 
         static::creating(function($tournee) {
             $tournee->order_number = Tournee::generateOrderNumber();
-        });
+if ($tournee->ijm) {
+                //claculate accomodation
+                $tournee->no_accomodation = $tournee->start_date->diffInDays($tournee->end_date);
+
+                if (strtotime($tournee->start_time) <= strtotime('05:00 AM')) {
+                    $tournee->no_accomodation = $tournee->no_accomodation + 1;
+                }
+
+                //calculate meals
+                $tournee->no_meals = 2 * ($tournee->start_date->diffInDays($tournee->end_date) - 1);
+                if (strtotime($tournee->start_time) <= strtotime('12:00 PM')) {
+                    $tournee->no_meals = $tournee->no_meals + 2;
+                } else if (strtotime($tournee->start_time) <= strtotime('07:00 PM')) {
+                    $tournee->no_meals = $tournee->no_meals + 1;
+                }
+                if (strtotime($tournee->end_time) >= strtotime('09:00 PM')) {
+                    $tournee->no_meals = $tournee->no_meals + 2;
+                } else if (strtotime($tournee->end_time) >= strtotime('02:00 PM')) {
+                    $tournee->no_meals = $tournee->no_meals + 1;
+                }
+            }       
+ });
         static::updating(function ($tournee) {
             if ($tournee->ijm) {
                 //claculate accomodation

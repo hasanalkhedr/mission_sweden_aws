@@ -115,7 +115,7 @@
                                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-1 py-1 text-center hover:text-gray-900">{{ __('Print') }}</a>
                                     </td>
                                 @endif
-                                @if (auth()->user()->employee->role == 'hr' || auth()->user()->employee->role == 'sg')
+                                @if (auth()->user()->employee->role == 'hr' || auth()->user()->employee->role == 'sg' || auth()->user()->employee->id === $tournee->employee_id)
                                     <td class="text-center px-0 py-1 border-b">
                                         <a href="{{ route('tournees.report', $tournee->id) }}"
                                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-1 py-1 text-center hover:text-gray-900">{{ __('Print') }}</a>
@@ -136,7 +136,7 @@
                                 @if (auth()->user()->employee->role == 'hr' ||
                                         auth()->user()->employee->role == 'sg' ||
                                         (auth()->user()->employee->role === 'supervisor' &&
-                                            auth()->user()->employee->department_id === $tournee->employee->department_id))
+                                            auth()->user()->employee->department_id === $tournee->employee->department_id) || auth()->user()->employee->id === $tournee->employee_id)
                                     <td class="text-center px-0 py-1 border-b">
                                         <a href="{{ route('tournees.report', $tournee->id) }}"
                                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-1 py-1 text-center hover:text-gray-900">{{ __('Print') }}</a>
@@ -157,7 +157,7 @@
                                 @if (auth()->user()->employee->role == 'hr' ||
                                         auth()->user()->employee->role == 'sg' ||
                                         (auth()->user()->employee->role === 'supervisor' &&
-                                            auth()->user()->employee->department_id === $tournee->employee->department_id))
+                                            auth()->user()->employee->department_id === $tournee->employee->department_id) || auth()->user()->employee->id === $tournee->employee_id)
                                     <td class="text-center px-0 py-1 border-b">
                                         <a href="{{ route('tournees.report', $tournee->id) }}"
                                             class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-1 py-1 text-center hover:text-gray-900">{{ __('Print') }}</a>

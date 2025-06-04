@@ -105,7 +105,7 @@
                                 <!-- Image preview -->
                                 @if ($employee->profile_image)
                                     <img id="{{ 'eprofileImagePreview' . $employee->id }}"
-                                        src="{{ asset('storage/app/public/' . $employee->profile_image) }}"
+                                        src="{{ asset('storage/' . $employee->profile_image) }}"
                                         alt="Image de profil" class="object-cover w-full h-full">
                                 @else
                                     <img id="{{ 'eprofileImagePreview' . $employee->id }}"
@@ -184,8 +184,7 @@
                                 <input type="hidden" name="allow_order" value="0">
                                 <input type="checkbox" name="allow_order" value="1"
                                     id="can-submit-requests--{{ $employee->id }}"
-                                    {{ $employee->allow_order ? 'checked' : '' }}
-                                    onchange="toggleOffDaysContainer(this)">
+                                    {{ $employee->allow_order ? 'checked' : '' }}>
                             </div>
                             @error('allow_order')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

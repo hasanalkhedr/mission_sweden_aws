@@ -27,7 +27,7 @@
                 <div class="flex flex-wrap -mx-3 mb-6 h-auto">
                         <div class="relativ mx-auto">
                             <img id="imageModal-{{ $expense->id }}"
-                                src="{{ asset('storage/app/public/'.$expense->expense_document)}}"
+                                src="{{ asset('storage/'.$expense->expense_document)}}"
                                 alt="Expense Document" class="object-cover w-full h-full max-w-full max-h-full">
                         <script>
                             const imageModal_{{ $expense->id }} = document.getElementById('imageModal-{{ $expense->id }}');

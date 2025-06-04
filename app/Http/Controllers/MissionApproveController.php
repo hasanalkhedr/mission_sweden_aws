@@ -27,7 +27,7 @@ class MissionApproveController extends Controller
             case 'approve':
                 switch ($missionOrder->status) {
                     case 'sup_approve':
-                        $newStatus = 'hr_approve';
+                        $newStatus = 'sg_approve';
                         break;
                     case 'hr_approve':
                         $newStatus = 'sg_approve';
@@ -91,7 +91,7 @@ class MissionApproveController extends Controller
             case 'approve':
                 switch ($missionOrder->memor_status) {
                     case 'sup_approve':
-                        $newStatus = 'hr_approve';
+                        $newStatus = 'sg_approve';
                         break;
                     case 'hr_approve':
                         $newStatus = 'sg_approve';

@@ -1,13 +1,18 @@
 @extends('layouts.app')
 @section('title', $tournee->order_number . '-' . $tournee->employee->first_name . ' ' . $tournee->employee->last_name)
 @section('content')
-    <div id="report-content">
-        <div class="bg-white w-4/5 mx-auto py-1 sm:px-2 lg:px-4 printable">
-            <div class="bg-white p-2">
-                <div class="flex flex-wrap mb-2">
+    
+<div id="report-content" style="#report-content {
+     width: 8.27in; /* A4 width */
+     height: 11.69in; /* A4 height */
+     overflow: hidden; /* Prevent content overflow */
+ }">
+<div class="bg-white w-4/5 mx-auto py-1 sm:px-1 lg:px-2 printable">
+            <div class="bg-white p-1">
+                <div class="flex flex-wrap mb-1">
                     <x-application-logo class="w-2/5"></x-application-logo>
                     <div class="w-3/5 px-10 mt-10 mb-6 md:mb-0 text-end">
-                        <p>Beyrouth, {{ $tournee->memor_date->format('d/m/Y') }}</p>
+                        <p>Stockholm, {{ $tournee->memor_date->format('d/m/Y') }}</p>
                     </div>
                     <div class="w-full px-3 mt-4 mb-2 md:mb-0 text-center">
                         <h3 class="text-lg font-semibold">MÉMOIRE DE FRAIS</h3>
@@ -78,7 +83,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="w-full px-2">
+                        <td class="w-full px-[2px]">
                             @include('partials.modals._tournee-ijmtable')
                         </td>
                     </tr>
@@ -95,73 +100,73 @@
                         <td class="w-full">
                             <div class="flex flex-col">
                                 <div class="-m-1.5 overflow-x-auto">
-                                    <div class="p-1.5 min-w-full inline-block align-middle">
+                                    <div class="p-[2px] min-w-full inline-block align-middle">
                                         <div class="overflow-hidden">
-<table class="min-w-full divide-y divide-gray-200 border border-gray-300">
-    <thead>
-        <tr>
-            <th scope="col"
-                class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
-                Nature de
-                la dépense</th>
-            <th scope="col"
-                class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
-                Date
-                dépense</th>
-            <th scope="col"
-                class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
-                Montant</th>
-            <th scope="col"
-                class="px-6 py-1 text-center text-xs font-medium text-gray-500 uppercase">
-                Devise</th>
-        </tr>
-    </thead>
-    <tbody>
-        @forelse ($tournee->expenses as $expense)
-            <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
-                <td
-                    class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm font-medium text-gray-800">
-                    {{ $expense->description }}</td>
-                <td
-                    class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
-                    {{ $expense->expense_dateformat('d/m/Y H:i') }}</td>
-                <td
-                    class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
-                    {{ $expense->amount }}</td>
-                <td
-                    class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm text-gray-800">
-                    {{ $expense->currency }}</td>
-            </tr>
-        @empty
-            <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
-                <td colspan="4"
-                    class="px-6 text-center border border-gray-200 py-1 whitespace-nowrap text-sm font-medium text-gray-800">
-                    {{ __('No Expenses Found') }}</td>
-            </tr>
-        @endforelse
-    </tbody>
-    <tfoot>
-        @forelse ($tournee->getExpensesByCurrency() as $currency=>$currencyAmount)
-            <tr>
-                <th scope="col"></th>
-                <th scope="col"
-                    class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
-                    SOMME
-                </th>
-                <th scope="col"
-                    class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
-                    {{ $currencyAmount }}
-                </th>
-                <th scope="col"
-                    class="px-6 py-1 text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
-                    {{ $currency }}
-                </th>
-                <th scope="col"></th>
-            </tr>
-        @empty
-        @endforelse
-    </tfoot>
-</table>
+                                            <table class="min-w-full divide-y divide-gray-200 border border-gray-300">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"
+                                                            class="px-1 py-[2px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            Nature de
+                                                            la dépense</th>
+                                                        <th scope="col"
+                                                            class="px-1 py-[2px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            Date
+                                                            dépense</th>
+                                                        <th scope="col"
+                                                            class="px-1 py-[2px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            Montant</th>
+                                                        <th scope="col"
+                                                            class="px-1 py-[2px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            Devise</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @forelse ($tournee->expenses as $expense)
+                                                        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
+                                                            <td
+                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm font-medium text-gray-800">
+                                                                {{ $expense->description }}</td>
+                                                            <td
+                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm text-gray-800">
+                                                                {{ $expense->expense_dateformat('d/m/Y H:i') }}</td>
+                                                            <td
+                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm text-gray-800">
+                                                                {{ $expense->amount }}</td>
+                                                            <td
+                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm text-gray-800">
+                                                                {{ $expense->currency }}</td>
+                                                        </tr>
+                                                    @empty
+                                                        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
+                                                            <td colspan="4"
+                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm font-medium text-gray-800">
+                                                                {{ __('No Expenses Found') }}</td>
+                                                        </tr>
+                                                    @endforelse
+                                                </tbody>
+                                                <tfoot>
+                                                    @forelse ($tournee->getExpensesByCurrency() as $currency=>$currencyAmount)
+                                                        <tr>
+                                                            <th scope="col"></th>
+                                                            <th scope="col"
+                                                                class="px-1 py-[2px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                SOMME
+                                                            </th>
+                                                            <th scope="col"
+                                                                class="px-1 py-[2px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                {{ $currencyAmount }}
+                                                            </th>
+                                                            <th scope="col"
+                                                                class="px-1 py-[2px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                {{ $currency }}
+                                                            </th>
+                                                            <th scope="col"></th>
+                                                        </tr>
+                                                    @empty
+                                                    @endforelse
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -180,35 +185,35 @@
                     <tr>
                         <td class="w-full py-1" colspan="2">
                             <table class="border border-gray-500 table-auto text-center">
-    <tr>
-        <td rowspan="2" class="w-1/3 border border-gray-500">Totaux</td>
-        <td class="border border-gray-500 w-2/12">IJM</td>
-        <td class="border border-gray-500 w-2/12">Frais divers</td>
-        <td class="border border-gray-500 w-2/12">Avance</td>
-        <td class="border border-gray-500 w-2/12">Net à payer</td>
-    </tr>
-    <tr>
-        <td class="border border-gray-500 w-2/12">{{ $tournee->total_amount }}</td>
-        <td class="border border-gray-500 w-2/12">
-            <ul>
-                @forelse ($tournee->getExpensesByCurrency() as $currency=>$currencyAmount)
-                    <li>{{ $currencyAmount }} {{ $currency }}</li>
-                @empty
-                    <li>0.00</li>
-                @endforelse
-            </ul>
-        </td>
-        <td class="border border-gray-500 w-2/12">{{ $tournee->advance }}</td>
-        <td class="border border-gray-500 w-2/12">
-            <ul>
-                @forelse ($tournee->getMemoireTotals() as $currency=>$currencyAmount)
-                    <li>{{ $currencyAmount }} {{ $currency }}</li>
-                @empty
-                    <li>0.00</li>
-                @endforelse
-            </ul>
-        </td>
-    </tr>
+                                <tr>
+                                    <td rowspan="2" class="w-1/3 border border-gray-500">Totaux</td>
+                                    <td class="border border-gray-500 w-2/12">IJM</td>
+                                    <td class="border border-gray-500 w-2/12">Frais divers</td>
+                                    <td class="border border-gray-500 w-2/12">Avance</td>
+                                    <td class="border border-gray-500 w-2/12">Net à payer</td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-gray-500 w-2/12">{{ $tournee->total_amount }}</td>
+                                    <td class="border border-gray-500 w-2/12">
+                                        <ul>
+                                            @forelse ($tournee->getExpensesByCurrency() as $currency=>$currencyAmount)
+                                                <li>{{ $currencyAmount }} {{ $currency }}</li>
+                                            @empty
+                                                <li>0.00</li>
+                                            @endforelse
+                                        </ul>
+                                    </td>
+                                    <td class="border border-gray-500 w-2/12">{{ $tournee->advance }}</td>
+                                    <td class="border border-gray-500 w-2/12">
+                                        <ul>
+                                            @forelse ($tournee->getMemoireTotals() as $currency=>$currencyAmount)
+                                                <li>{{ $currencyAmount }} {{ $currency }}</li>
+                                            @empty
+                                                <li>0.00</li>
+                                            @endforelse
+                                        </ul>
+                                    </td>
+                                </tr>
                             </table>
                         </td>
                 </tbody>
@@ -216,9 +221,9 @@
             <table class="table-auto w-full text-left">
                 @if (count($tournee->getMemoireTotals()) === 1)
                     <tr>
-                        <td class="w-1/3 py-1">ARRETE ET LIQUIDE LA SOMME DE :</td>
+                        <td class="w-1/3 py-[1px]">ARRETE ET LIQUIDE LA SOMME DE :</td>
                         @foreach ($tournee->getMemoireTotals() as $currency => $currencyAmount)
-                            <td class="w-2/3 py-1">{{ $currencyAmount }} {{ $currency }} <span
+                            <td class="w-2/3 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
                                     class="font-normal px-5"> arrondi à </span>{{ round($currencyAmount) }}
                                 {{ $currency }}</td>
                         @endforeach
@@ -227,16 +232,16 @@
                     @foreach ($tournee->getMemoireTotals() as $currency => $currencyAmount)
                         @if ($loop->first)
                             <tr>
-                                <td class="w-1/3 py-1" rowspan="{{ count($tournee->getMemoireTotals()) }}">
+                                <td class="w-1/3 py-[1px]" rowspan="{{ count($tournee->getMemoireTotals()) }}">
                                     ARRETE ET LIQUIDE LA SOMME DE :</td>
-                                <td class="w-2/3 py-1">{{ $currencyAmount }} {{ $currency }} <span
+                                <td class="w-2/3 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
                                         class="font-normal px-5">
                                         arrondi à </span>{{ round($currencyAmount) }}
                                     {{ $currency }}</td>
                             </tr>
                         @else
                             <tr>
-                                <td class="w-2/3 py-1">{{ $currencyAmount }} {{ $currency }} <span
+                                <td class="w-2/3 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
                                         class="font-normal px-5">
                                         arrondi à </span>{{ round($currencyAmount) }}
                                     {{ $currency }}</td>
@@ -294,7 +299,7 @@
                             <span></span>
                         </td>
                         <td class="w-7/12 text-center">
-                            <span class="font-bold text-lg w-24 text-center">SCIORTINO Sabine</span>
+                            <span class="font-bold text-lg w-24 text-center">Katerina Doytchinov</span>
                         </td>
                     </tr>
                     <tr>
@@ -305,7 +310,7 @@
                             </span>
                         </td>
                         <td class="w-7/12 text-center">
-                            <span class="font-light text-md  w-16 text-center">COCAC - Directrice de l'IFL</span>
+                            <span class="font-light text-md  w-16 text-center">COCAC - Directrice de l'IFS</span>
                         </td>
                     </tr>
                 </tbody>

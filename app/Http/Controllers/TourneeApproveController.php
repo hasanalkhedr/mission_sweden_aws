@@ -27,7 +27,7 @@ class TourneeApproveController extends Controller
             case 'approve':
                 switch ($tournee->status) {
                     case 'sup_approve':
-                        $newStatus = 'hr_approve';
+                        $newStatus = 'sg_approve';
                         break;
                     case 'hr_approve':
                         $newStatus = 'sg_approve';
@@ -92,7 +92,7 @@ class TourneeApproveController extends Controller
             case 'approve':
                 switch ($tournee->memor_status) {
                     case 'sup_approve':
-                        $newStatus = 'hr_approve';
+                        $newStatus = 'sg_approve';
                         break;
                     case 'hr_approve':
                         $newStatus = 'sg_approve';

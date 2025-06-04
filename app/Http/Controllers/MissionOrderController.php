@@ -21,20 +21,20 @@ class MissionOrderController extends Controller
             case 'employee':
                 $missionOrders = MissionOrder::where('employee_id', '=', auth()->user()->employee->id)->when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->paginate(10);
+                })->orderBy('id', 'desc')->paginate(10);
                 break;
             case 'supervisor':
                 $missionOrders = MissionOrder::whereHas('employee', function ($query) {
                     $query->where('department_id', auth()->user()->employee->department_id);
                 })->when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->paginate(10);
+                })->orderBy('id', 'desc')->paginate(10);
                 break;
             case 'hr':
             case 'sg':
                 $missionOrders = MissionOrder::when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->paginate(10);
+                })->orderBy('id', 'desc')->paginate(10);
                 break;
             default:
                 $missionOrders = null;
@@ -103,7 +103,7 @@ class MissionOrderController extends Controller
         if ($action === 'draft') {
             $status = 'draft';
         } else if ($action === 'submit') {
-            switch (Auth::user()->employee->role) {
+/*            switch (Auth::user()->employee->role) {
                 case 'employee':
                     $status = 'sup_approve';
                     break;
@@ -124,6 +124,8 @@ class MissionOrderController extends Controller
                     $status = 'sg_approve';
                     break;
             }
+*/
+$status = 'approved';
         }
         $missionOrder = MissionOrder::create(array_merge($request->all(), ['budget_text' => $budget_text, 'status' => $status]));
         $notification = new MissionOrderLevelNotification($missionOrder);
@@ -140,6 +142,7 @@ class MissionOrderController extends Controller
                 }
                 break;
             case 'sg_approve':
+case 'approved':
                 $users = User::whereHas('employee', function ($query) {
                     $query->where('role', 'sg');
                 })->get();
@@ -193,7 +196,7 @@ class MissionOrderController extends Controller
         if ($action === 'draft') {
             $status = 'draft';
         } else if ($action === 'submit') {
-            switch (Auth::user()->employee->role) {
+         /*   switch (Auth::user()->employee->role) {
                 case 'employee':
                     $status = 'sup_approve';
                     break;
@@ -214,6 +217,8 @@ class MissionOrderController extends Controller
                     $status = 'sg_approve';
                     break;
             }
+*/
+$status = 'approved';
         }
         $missionOrder->update(array_merge($request->all(), ['budget_text' => $budget_text, 'status' => $status]));
         $notification = new MissionOrderLevelNotification($missionOrder);
@@ -230,6 +235,7 @@ class MissionOrderController extends Controller
                 }
                 break;
             case 'sg_approve':
+case 'approved':
                 $users = User::whereHas('employee', function ($query) {
                     $query->where('role', 'sg');
                 })->get();
@@ -267,20 +273,20 @@ class MissionOrderController extends Controller
                 $missionOrders = MissionOrder::where('employee_id', '=', auth()->user()->employee->id)
                     ->where('status', 'like', 'approved')->when($search, function ($query, $search) {
                         return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                    })->paginate(10);
+                    })->orderBy('id', 'desc')->paginate(10);
                 break;
             case 'supervisor':
                 $missionOrders = MissionOrder::whereHas('employee', function ($query) {
                     $query->where('department_id', auth()->user()->employee->department_id);
                 })->where('status', 'like', 'approved')->when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->paginate(10);
+                })->orderBy('id', 'desc')->paginate(10);
                 break;
             case 'hr':
             case 'sg':
                 $missionOrders = MissionOrder::when($search, function ($query, $search) {
                     return $query->where('order_number', 'like', '%' . $search . '%')->orWhere('purpose', 'like', '%' . $search . '%');
-                })->where('status', 'like', 'approved')->paginate(10);
+                })->where('status', 'like', 'approved')->orderBy('id', 'desc')->paginate(10);
                 break;
             default:
                 $missionOrders = null;
@@ -320,7 +326,7 @@ class MissionOrderController extends Controller
         } else if ($action === 'draft') {
             $memor_status = 'draft';
         } else if ($action === 'submit') {
-            switch (Auth::user()->employee->role) {
+          /*  switch (Auth::user()->employee->role) {
                 case 'employee':
                     $memor_status = 'sup_approve';
                     break;
@@ -341,6 +347,8 @@ class MissionOrderController extends Controller
                     $memor_status = 'sg_approve';
                     break;
             }
+*/
+$memor_status = 'approved';
         }
         $missionOrder->update(array_merge($request->all(), ['memor_status' => $memor_status]));
 
@@ -358,6 +366,7 @@ class MissionOrderController extends Controller
                 }
                 break;
             case 'sg_approve':
+case 'approved':
                 $users = User::whereHas('employee', function ($query) {
                     $query->where('role', 'sg');
                 })->get();

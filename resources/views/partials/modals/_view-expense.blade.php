@@ -60,7 +60,7 @@
                         <!-- Image upload input and preview with button on top of the image -->
                         <div class="relative w-full h-full mx-auto">
                             <!-- Image preview -->
-                            <img src="{{ asset('storage/app/public/' . $expense->expense_document) }}"
+                            <img src="{{ asset('storage/' . $expense->expense_document) }}"
                                 alt="Expense Document"
                                 class="object-cover w-full h-full">
                         </div>

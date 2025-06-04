@@ -69,7 +69,7 @@
                             <div class="relative w-full h-full mx-auto">
                                 <!-- Image preview -->
                                 <img id="expenseDocumentPreview-edit-{{ $expense->id }}"
-                                    src="{{asset('storage/app/public/' . $expense->expense_document) }}"
+                                    src="{{asset('storage/' . $expense->expense_document) }}"
                                     alt="Document de dépenses"
                                     class="object-cover w-full h-full">
                                 <!-- Browse Files Button positioned on top of the image -->
