@@ -3,7 +3,7 @@
 @section('content')
 
 <div id="report-content">
-        <div class="report-page" style="width: 210mm; height: 277mm; margin: 0 auto; padding: 8mm; box-sizing: border-box;">
+        <div class="report-page" style="width: 210mm; height: 297mm; margin: 0 auto; padding: 8mm; box-sizing: border-box;">
             <!-- Header -->
             <div class="flex justify-between items-start mb-2">
                 <x-application-logo class="h-12 w-2/5" />
