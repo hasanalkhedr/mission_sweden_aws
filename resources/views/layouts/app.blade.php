@@ -62,7 +62,7 @@
                                 </svg> --}}
                             </button>
                             {{-- </a> --}}
-                            <ul id="dropdown-missions-" class="py-2 space-y-2 mx-2">
+                            <ul id="dropdown-missions" class="py-2 space-y-2 mx-2">
                                 <li>
                                     <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                         href="{{ route('mission_orders.create') }}">
@@ -107,7 +107,7 @@
                                 </svg> --}}
                             </button>
                             {{-- </a> --}}
-                            <ul id="dropdown-tournees-" class=" py-2 space-y-2 mx-2">
+                            <ul id="dropdown-tournees" class=" py-2 space-y-2 mx-2">
                                 <li>
                                     <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                         href="{{ route('tournees.create') }}">
@@ -172,7 +172,7 @@
                                     clip-rule="evenodd"></path>
                             </svg> --}}
                                 </button>
-                                <ul id="dropdown-settings-" class="py-2 space-y-2 mx-2">
+                                <ul id="dropdown-settings" class="py-2 space-y-2 mx-2">
                                     <li>
                                         <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                             href="{{ route('baremes.index') }}">
@@ -241,7 +241,7 @@
                                 </svg> --}}
                         </button>
                         {{-- </a> --}}
-                        <ul id="dropdown-missions-" class="py-2 space-y-2 mx-2">
+                        <ul id="dropdown-missions" class="py-2 space-y-2 mx-2">
                             <li>
                                 <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                     href="{{ route('mission_orders.create') }}">
@@ -286,7 +286,7 @@
                                 </svg> --}}
                         </button>
                         {{-- </a> --}}
-                        <ul id="dropdown-tournees-" class=" py-2 space-y-2 mx-2">
+                        <ul id="dropdown-tournees" class=" py-2 space-y-2 mx-2">
                             <li>
                                 <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                     href="{{ route('tournees.create') }}">
@@ -351,7 +351,7 @@
                                     clip-rule="evenodd"></path>
                             </svg> --}}
                             </button>
-                            <ul id="dropdown-settings-" class="py-2 space-y-2 mx-2">
+                            <ul id="dropdown-settings" class="py-2 space-y-2 mx-2">
                                 <li>
                                     <a class="flex items-center mx-2 px-2 py-2 text-white rounded-lg transition duration-75 group hover:bg-blue-500"
                                         href="{{ route('baremes.index') }}">

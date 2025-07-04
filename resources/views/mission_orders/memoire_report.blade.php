@@ -1,25 +1,17 @@
 @extends('layouts.app')
-@section('title', $missionOrder->order_number . '-' . $missionOrder->employee->first_name . ' ' .
-    $missionOrder->employee->last_name)
+@section('title', $missionOrder->order_number . '-' . $missionOrder->employee->first_name . ' ' .$missionOrder->employee->last_name)
 @section('content')
-    <div id="report-content" 
-            style="#report-content {
-    width: 8.27in; /* A4 width */
-    height: 11.69in; /* A4 height */
-    overflow: hidden; /* Prevent content overflow */
-}">
-<div class="bg-white mx-1 ml-1  w-full py-[2px] sm:px-1 lg:px-1 printable">
-            <div class="bg-white p-1">
-                <div class="flex flex-wrap mb-[1px]">
-                    <x-application-logo class="w-2/5"></x-application-logo>
-                    <div class="w-3/5 px-10 mt-10 mb-6 md:mb-0 text-end">
-                        <p>Stockholm, {{ $missionOrder->memor_date->format('d/m/Y') }}</p>
-                    </div>
-                    <div class="w-full px-3 mt-4 mb-[2px] md:mb-0 text-center">
-                        <h3 class="text-lg font-semibold">MÉMOIRE DE FRAIS</h3>
-                    </div>
+    <div id="report-content">
+        <div class="report-page" style="width: 210mm; height: 277mm; margin: 0 auto; padding: 8mm; box-sizing: border-box;">
+            <!-- Header -->
+            <div class="flex justify-between items-start mb-2">
+                <x-application-logo class="h-12 w-2/5" />
+                <div class="text-right w-3/5">
+                    <p>Stockholm, {{ $missionOrder->memor_date->format('d/m/Y') }}</p>
                 </div>
             </div>
+            <!-- Title -->
+            <h1 class="text-2xl font-bold text-center mb-2">MÉMOIRE DE FRAIS</h1>
             <table class="table-auto w-full text-left">
                 <thead>
                     <tr class="bg-blue-200">
@@ -222,9 +214,9 @@
             <table class="table-auto w-full text-left">
                 @if (count($missionOrder->getMemoireTotals()) === 1)
                     <tr>
-                        <td class="w-1/3 py-[1px]">ARRETE ET LIQUIDE LA SOMME DE :</td>
+                        <td class="w-2/5 py-[1px]">ARRETE ET LIQUIDE LA SOMME DE:</td>
                         @foreach ($missionOrder->getMemoireTotals() as $currency => $currencyAmount)
-                            <td class="w-2/3 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
+                            <td class="w-3/5 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
                                     class="font-normal px-5"> arrondi à </span>{{ round($currencyAmount) }}
                                 {{ $currency }}</td>
                         @endforeach
@@ -233,16 +225,16 @@
                     @foreach ($missionOrder->getMemoireTotals() as $currency => $currencyAmount)
                         @if ($loop->first)
                             <tr>
-                                <td class="w-1/3 py-[1px]" rowspan="{{ count($missionOrder->getMemoireTotals()) }}">
-                                    ARRETE ET LIQUIDE LA SOMME DE :</td>
-                                <td class="w-2/3 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
+                                <td class="w-2/5 py-[1px]" rowspan="{{ count($missionOrder->getMemoireTotals()) }}">
+                                    ARRETE ET LIQUIDE LA SOMME DE:</td>
+                                <td class="w-3/5 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
                                         class="font-normal px-5">
                                         arrondi à </span>{{ round($currencyAmount) }}
                                     {{ $currency }}</td>
                             </tr>
                         @else
                             <tr>
-                                <td class="w-2/3 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
+                                <td class="w-3/5 py-[1px]">{{ $currencyAmount }} {{ $currency }} <span
                                         class="font-normal px-5">
                                         arrondi à </span>{{ round($currencyAmount) }}
                                     {{ $currency }}</td>
@@ -251,26 +243,6 @@
                     @endforeach
                 @endif
             </table>
-            {{-- <div class="w-10/12 justify-between">
-                <div class="w-1/3 font-semibold inline">ARRETE ET LIQUIDE LA SOMME DE :</div>
-                <div class="w-full pl-40">
-                    <table>
-                        @forelse ($missionOrder->getMemoireTotals() as $currency=>$currencyAmount)
-                            <tr>
-                                <td class="w-3/12 text-center font-bold">{{ $currencyAmount }} {{ $currency }}</td>
-                                <td class="w-3/12 text-center font-bold"><span class="font-normal px-5"> arrondi à </span>
-                                </td>
-                                <td class="w-3/12 text-center font-bold">{{ round($currencyAmount) }} {{ $currency }}
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3">0.00</td>
-                            </tr>
-                        @endforelse
-                    </table>
-                </div>
-            </div> --}}
             <table class="table-auto w-full text-left">
                 <thead>
                     <tr class="bg-blue-200">
@@ -318,46 +290,177 @@
             </table>
         </div>
     </div>
-    <!-- Add a print button -->
-    <div class="mt-6 no-print text-center">
+    <!-- Action Buttons -->
+    <div class="flex justify-center space-x-4 mb-8 no-print">
         <button onclick="window.print()"
-            class="bg-blue-500 px-4 py-3 mb-10 hover:bg-blue-700 text-white font-bold rounded">
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
+                </path>
+            </svg>
             {{ __('Print Report') }}
         </button>
-        <button id="download-pdf" class="bg-blue-500 px-4 py-3 mb-10 hover:bg-blue-700 text-white font-bold rounded">
+        <button id="download-pdf"
+            class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-200 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+            </svg>
             {{ __('Save as PDF file') }}
         </button>
     </div>
+    <style>
+        @media print {
+
+            html,
+            body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white !important;
+            }
+
+            .report-page {
+                width: 190mm !important;
+                height: 277mm !important;
+                margin: 10mm auto !important;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+
+
+        /* Screen styles */
+        .report-page {
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0;
+        }
+
+        .report-page {
+            overflow: hidden;
+            /* Prevent any hidden overflow */
+        }
+
+        .btn-blue {
+            background: #2563eb;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-green {
+            background: #059669;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+
     <script>
-        document.getElementById("download-pdf").addEventListener("click", function() {
+        document.getElementById("download-pdf").addEventListener("click", async function() {
             var element = document.getElementById('report-content'); // The element you want to print
+            const loading = createLoadingIndicator();
 
-            var opt = {
-                margin: 0,
-                filename: "{{ 'Memoire:' .
-                    $missionOrder->order_number .
-                    '-' .
-                    $missionOrder->employee->first_name .
-                    ' ' .
-                    $missionOrder->employee->last_name .
-                    '.pdf' }}",
-                image: {
-                    type: 'png',
-                    quality: 0.98
-                },
-                html2canvas: {
-                    scale: 2,
-                    useCORS: true,
-                }, // For better quality
-                jsPDF: {
-                    unit: 'in',
-                    format: 'a4',
-                    orientation: 'portrait'
-                }
-            };
-
-            // Generate and download the PDF
-            html2pdf().from(element).set(opt).save();
+            try {
+                await generatePDF(element);
+            } catch (error) {
+                alert("Failed to generate PDF. Please try printing instead (Ctrl+P).");
+                alert(error);
+            } finally {
+                loading.remove();
+            }
         });
+
+        function createLoadingIndicator() {
+            const loading = document.createElement('div');
+            loading.style.position = 'fixed';
+            loading.style.top = '0';
+            loading.style.left = '0';
+            loading.style.width = '100%';
+            loading.style.height = '100%';
+            loading.style.backgroundColor = 'rgba(0,0,0,0.7)';
+            loading.style.color = 'white';
+            loading.style.display = 'flex';
+            loading.style.flexDirection = 'column';
+            loading.style.justifyContent = 'center';
+            loading.style.alignItems = 'center';
+            loading.style.zIndex = '9999';
+            loading.innerHTML = `
+            <div style="font-size: 24px; margin-bottom: 20px;">Generating PDF...</div>
+            <div style="width: 50%; height: 20px; background: #555; border-radius: 10px;">
+                <div id="progress-bar" style="width: 0%; height: 100%; background: #4CAF50; border-radius: 10px;"></div>
+            </div>
+            <p id="progress-text" style="margin-top: 10px;">Initializing...</p>
+        `;
+            document.body.appendChild(loading);
+            return loading;
+        }
+
+        function updateProgress(percentage, message) {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            if (progressBar) progressBar.style.width = percentage + '%';
+            if (progressText) progressText.textContent = message;
+        }
+
+        async function generatePDF(element, customOptions = {}) {
+            try {
+                updateProgress(10, "Preparing content...");
+
+                const defaultOptions = {
+                    margin: 0,
+                    filename: `Mémoire-{{ $missionOrder->order_number }}-{{ $missionOrder->employee->first_name }}_{{ $missionOrder->employee->last_name }}.pdf`,
+                    html2canvas: {
+                        scale: 2,
+                        useCORS: true,
+                    },
+                    jsPDF: {
+                        unit: 'mm', // Use millimeters for more precise control
+                        format: 'a4',
+                        orientation: 'portrait',
+                    }
+                };
+
+                const options = {
+                    ...defaultOptions,
+                    ...customOptions
+                };
+
+                updateProgress(30, "Generating PDF...");
+
+                // Create a promise that resolves when the PDF is generated
+                await new Promise((resolve, reject) => {
+                    html2pdf()
+                        .set(options)
+                        .from(element)
+                        .save()
+                        .then(() => {
+                            updateProgress(90, "Finalizing PDF...");
+                            setTimeout(() => {
+                                updateProgress(100, "Done!");
+                                resolve();
+                            }, 500);
+                        })
+                        .catch(reject);
+                });
+            } catch (error) {
+                console.error("PDF generation failed:", error);
+                updateProgress(0, "Failed to generate PDF");
+                throw error; // Re-throw if you want calling code to handle it
+            }
+        }
     </script>
 @endsection
