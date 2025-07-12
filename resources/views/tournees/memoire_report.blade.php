@@ -2,17 +2,17 @@
 @section('title', $tournee->order_number . '-' . $tournee->employee->first_name . ' ' . $tournee->employee->last_name)
 @section('content')
 
-<div id="report-content">
-        <div class="report-page" style="width: 210mm; height: 297mm; margin: 0 auto; padding: 8mm; box-sizing: border-box;">
+<div id="report-content" class="scale-content">
+        <div class="report-page" style="width: 210mm; height: 297mm; margin: 0 auto; padding: 2mm 8mm; box-sizing: border-box;">
             <!-- Header -->
-            <div class="flex justify-between items-start mb-2">
+            <div class="flex justify-between items-start mb-[2px]">
                 <x-application-logo class="h-12 w-2/5" />
                 <div class="text-right w-3/5">
                     <p>Stockholm, {{ $tournee->memor_date->format('d/m/Y') }}</p>
                 </div>
             </div>
             <!-- Title -->
-            <h1 class="text-2xl font-bold text-center mb-2">MÉMOIRE DE FRAIS</h1>
+            <h1 class="text-2xl font-bold text-center mb-[2px]">MÉMOIRE DE FRAIS</h1>
             <table class="table-auto w-full text-left">
                 <thead>
                     <tr class="bg-blue-200">
@@ -100,18 +100,18 @@
                                                 <thead>
                                                     <tr>
                                                         <th scope="col"
-                                                            class="px-1 py-[2px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase">
                                                             Nature de
                                                             la dépense</th>
                                                         <th scope="col"
-                                                            class="px-1 py-[2px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase">
                                                             Date
                                                             dépense</th>
                                                         <th scope="col"
-                                                            class="px-1 py-[2px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase">
                                                             Montant</th>
                                                         <th scope="col"
-                                                            class="px-1 py-[2px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase">
                                                             Devise</th>
                                                     </tr>
                                                 </thead>
@@ -119,22 +119,22 @@
                                                     @forelse ($tournee->expenses as $expense)
                                                         <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
                                                             <td
-                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm font-medium text-gray-800">
+                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm font-medium text-gray-800">
                                                                 {{ $expense->description }}</td>
                                                             <td
-                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm text-gray-800">
+                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm text-gray-800">
                                                                 {{ $expense->expense_dateformat('d/m/Y H:i') }}</td>
                                                             <td
-                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm text-gray-800">
+                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm text-gray-800">
                                                                 {{ $expense->amount }}</td>
                                                             <td
-                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm text-gray-800">
+                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm text-gray-800">
                                                                 {{ $expense->currency }}</td>
                                                         </tr>
                                                     @empty
                                                         <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
                                                             <td colspan="4"
-                                                                class="px-1 text-center border border-gray-200 py-[2px] whitespace-nowrap text-sm font-medium text-gray-800">
+                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm font-medium text-gray-800">
                                                                 {{ __('No Expenses Found') }}</td>
                                                         </tr>
                                                     @endforelse
@@ -144,15 +144,15 @@
                                                         <tr>
                                                             <th scope="col"></th>
                                                             <th scope="col"
-                                                                class="px-1 py-[2px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                class="px-1 py-[1px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
                                                                 SOMME
                                                             </th>
                                                             <th scope="col"
-                                                                class="px-1 py-[2px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                class="px-1 py-[1px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
                                                                 {{ $currencyAmount }}
                                                             </th>
                                                             <th scope="col"
-                                                                class="px-1 py-[2px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
+                                                                class="px-1 py-[1px] text-center text-xs font-bold text-blue-600 uppercase border border-gray-500">
                                                                 {{ $currency }}
                                                             </th>
                                                             <th scope="col"></th>
@@ -248,23 +248,23 @@
                 <thead>
                     <tr class="bg-blue-200">
                         <th class="px-4 w-5/12">Signature du bénéficiaire</th>
-                        <th class="px-24 w-7/12">Signature de l'autorité compétente</th>
+                        <th class="px-12 w-7/12">Signature de l'autorité compétente</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="w-5/12">
+                        <td class="w-6/12">
                             <span>Atteste l'effectitivité des dépenses exposées</span>
                         </td>
-                        <td class="w-7/12 text-center">
+                        <td class="w-6/12 text-center">
                             <span>Certifié exact,</span>
                         </td>
                     </tr>
                     <tr>
-                        <td class="w-5/12 pb-10">
+                        <td class="w-6/12 pb-3">
                             <span>ci-dessus, en demande le remboursement,</span>
                         </td>
-                        <td class="w-7/12 text-center">
+                        <td class="w-6/12 text-center">
                             <span></span>
                         </td>
                     </tr>
@@ -333,6 +333,11 @@
 
             .no-print {
                 display: none !important;
+            }
+            .scale-content {
+                transform-origin: top left;
+                width: 100%;
+                height: 100%;
             }
         }
 
@@ -418,50 +423,69 @@
         }
 
         async function generatePDF(element, customOptions = {}) {
-            try {
-                updateProgress(10, "Preparing content...");
+    try {
+        updateProgress(10, "Preparing content...");
 
-                const defaultOptions = {
-                    margin: 0,
-                    filename: `Mémoire-{{ $tournee->order_number }}-{{ $tournee->employee->first_name }}_{{ $tournee->employee->last_name }}.pdf`,
-                    html2canvas: {
-                        scale: 2,
-                        useCORS: true,
-                    },
-                    jsPDF: {
-                        unit: 'mm', // Use millimeters for more precise control
-                        format: 'a4',
-                        orientation: 'portrait',
-                    }
-                };
+        // First get the height of the content
+        const contentHeight = element.scrollHeight;
+        const pageHeight = 277 * 3.78; // 277mm in pixels (approx)
 
-                const options = {
-                    ...defaultOptions,
-                    ...customOptions
-                };
-
-                updateProgress(30, "Generating PDF...");
-
-                // Create a promise that resolves when the PDF is generated
-                await new Promise((resolve, reject) => {
-                    html2pdf()
-                        .set(options)
-                        .from(element)
-                        .save()
-                        .then(() => {
-                            updateProgress(90, "Finalizing PDF...");
-                            setTimeout(() => {
-                                updateProgress(100, "Done!");
-                                resolve();
-                            }, 500);
-                        })
-                        .catch(reject);
-                });
-            } catch (error) {
-                console.error("PDF generation failed:", error);
-                updateProgress(0, "Failed to generate PDF");
-                throw error; // Re-throw if you want calling code to handle it
-            }
+        // Calculate scale factor if content is taller than page
+        let scale = 1;
+        if (contentHeight > pageHeight) {
+            scale = pageHeight / contentHeight * 0.95; // 95% to add some margin
         }
+
+        const defaultOptions = {
+            margin: 0,
+            filename: `Mémoire-{{ $tournee->order_number }}-{{ $tournee->employee->first_name }}_{{ $tournee->employee->last_name }}.pdf`,
+            html2canvas: {
+                scale: 2,
+                useCORS: true,
+                windowHeight: element.scrollHeight,
+                onclone: (clonedDoc) => {
+                    // Apply scaling to the cloned document
+                    const reportContent = clonedDoc.getElementById('report-content');
+                    if (reportContent) {
+                        reportContent.style.transform = `scale(${scale})`;
+                        reportContent.style.width = `${100/scale}%`;
+                        reportContent.style.height = `${100/scale}%`;
+                    }
+                }
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait',
+            }
+        };
+
+        const options = {
+            ...defaultOptions,
+            ...customOptions
+        };
+
+        updateProgress(30, "Generating PDF...");
+
+        await new Promise((resolve, reject) => {
+            html2pdf()
+                .set(options)
+                .from(element)
+                .save()
+                .then(() => {
+                    updateProgress(90, "Finalizing PDF...");
+                    setTimeout(() => {
+                        updateProgress(100, "Done!");
+                        resolve();
+                    }, 500);
+                })
+                .catch(reject);
+        });
+    } catch (error) {
+        console.error("PDF generation failed:", error);
+        updateProgress(0, "Failed to generate PDF");
+        throw error;
+    }
+}
     </script>
 @endsection
