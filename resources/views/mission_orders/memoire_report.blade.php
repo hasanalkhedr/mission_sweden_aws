@@ -92,10 +92,10 @@
                     <tr>
                         <td class="w-full">
                             <div class="flex flex-col">
-                                <div class="-m-1.5 overflow-x-auto">
+                                <div class="-mx-1.5 my-0 overflow-x-auto">
                                     <div class="p-[2px] min-w-full inline-block align-middle">
-                                        <div class="overflow-hidden">
-                                            <table class="w-full divide-y divide-gray-200 border border-gray-300" style="table-layout: fixed;">
+                                        <div class="overflow-hidden expenses-table">
+                                            <table class="w-full divide-y divide-gray-200 border mx-1 border-gray-300" style="table-layout: fixed;">
                                                 <colgroup>
                                                     <col style="width: 70mm;"> <!-- Description -->
                                                     <col style="width: 40mm;"> <!-- Date -->
@@ -185,15 +185,15 @@
                         <td class="w-full py-1" colspan="2">
                             <table class="border border-gray-500 table-auto text-center w-full">
                                 <tr>
-                                    <td rowspan="2" class="w-1/3 border border-gray-500">Totaux</td>
-                                    <td class="border border-gray-500 w-2/12">IJM</td>
-                                    <td class="border border-gray-500 w-2/12">Frais divers</td>
-                                    <td class="border border-gray-500 w-2/12">Avance</td>
-                                    <td class="border border-gray-500 w-2/12">Net à payer</td>
+                                    <td rowspan="2" class="w-1/5 border border-gray-500">Totaux</td>
+                                    <td class="border border-gray-500 w-1/5">IJM</td>
+                                    <td class="border border-gray-500 w-1/5">Frais divers</td>
+                                    <td class="border border-gray-500 w-1/5">Avance</td>
+                                    <td class="border border-gray-500 w-1/5">Net à payer</td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-gray-500 w-2/12">{{ $missionOrder->total_amount }}</td>
-                                    <td class="border border-gray-500 w-2/12">
+                                    <td class="border border-gray-500 w-1/5">{{ $missionOrder->total_amount }}</td>
+                                    <td class="border border-gray-500 w-1/5">
                                         <ul>
                                             @forelse ($missionOrder->getExpensesByCurrency() as $currency=>$currencyAmount)
                                                 <li>{{ $currencyAmount }} {{ $currency }}</li>
@@ -202,8 +202,8 @@
                                             @endforelse
                                         </ul>
                                     </td>
-                                    <td class="border border-gray-500 w-2/12">{{ $missionOrder->advance }}</td>
-                                    <td class="border border-gray-500 w-2/12">
+                                    <td class="border border-gray-500 w-1/5">{{ $missionOrder->advance }}</td>
+                                    <td class="border border-gray-500 w-1/5">
                                         <ul>
                                             @forelse ($missionOrder->getMemoireTotals() as $currency=>$currencyAmount)
                                                 <li>{{ $currencyAmount }} {{ $currency }}</li>
@@ -317,6 +317,14 @@
         </button>
     </div>
     <style>
+        .html2pdf__page-break {
+        margin: 0;
+        padding: 0;
+        page-break-after: always;
+    }
+    .html2pdf__page-break:last-child {
+        page-break-after: avoid;
+    }
         @media print {
             html,
             body {
@@ -356,23 +364,23 @@ table {
         }
 
 /* Ensure table respects fixed layout */
-table {
+.expenses-table table {
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
 }
 
 /* Cell styling */
-td, th {
+.expenses-table td, .expenses-table th {
     overflow: hidden;
     word-wrap: break-word;
     padding: 2px 4px;
 }
 /* Specific column widths */
-col:nth-child(1) { width: 70mm; } /* Description */
-col:nth-child(2) { width: 40mm; } /* Date */
-col:nth-child(3) { width: 30mm; } /* Amount */
-col:nth-child(4) { width: 54mm; } /* Currency */
+.expenses-table col:nth-child(1) { width: 70mm; } /* Description */
+.expenses-table col:nth-child(2) { width: 40mm; } /* Date */
+.expenses-table col:nth-child(3) { width: 30mm; } /* Amount */
+.expenses-table col:nth-child(4) { width: 54mm; } /* Currency */
         /* Screen styles */
         .report-page {
             background: white;
@@ -458,10 +466,10 @@ col:nth-child(4) { width: 54mm; } /* Currency */
                 updateProgress(10, "Preparing content...");
 
                 const defaultOptions = {
-                    margin: 0, // Add some margin
+                    margin: [0, 0, 15, 0], // Top, Left, Bottom, Right (extra bottom margin for page numbers)
                     filename: `Mémoire-{{ $missionOrder->order_number }}-{{ $missionOrder->employee->first_name }}_{{ $missionOrder->employee->last_name }}.pdf`,
                     html2canvas: {
-                        scale: 1,
+                        scale: 2,
                         useCORS: true,
                         allowTaint: true,
                         scrollY: 0,
@@ -472,35 +480,46 @@ col:nth-child(4) { width: 54mm; } /* Currency */
                         unit: 'mm',
                         format: 'a4',
                         orientation: 'portrait',
-                        hotfixes: ['px_scaling']
+                        hotfixes: ['px_scaling'],
                     },
                     pagebreak: {
-                        mode: ['avoid-all', 'css', 'legacy'],
+                        mode: ['css', 'legacy'],
                         before: '.page-break'
-                    }
-                };
-
-                const options = {
-                    ...defaultOptions,
-                    ...customOptions
+                    },
                 };
 
                 updateProgress(30, "Generating PDF...");
 
-                await new Promise((resolve, reject) => {
+                // Generate PDF first
+                const pdf = await new Promise((resolve, reject) => {
                     html2pdf()
-                        .set(options)
+                        .set(defaultOptions)
                         .from(element)
-                        .save()
-                        .then(() => {
-                            updateProgress(90, "Finalizing PDF...");
-                            setTimeout(() => {
-                                updateProgress(100, "Done!");
-                                resolve();
-                            }, 500);
-                        })
+                        .toPdf()
+                        .get('pdf')
+                        .then(resolve)
                         .catch(reject);
                 });
+
+                // Now add page numbers
+                const totalPages = pdf.internal.getNumberOfPages();
+                for (let i = 1; i <= totalPages; i++) {
+                    pdf.setPage(i);
+                    pdf.setFontSize(10);
+                    pdf.setTextColor(100);
+                    pdf.text(
+                        `Page ${i} of ${totalPages}`,
+                        180,
+                        pdf.internal.pageSize.getHeight() - 5,
+                        { align: 'right' }
+                    );
+                }
+
+                // Save the modified PDF
+                pdf.save(defaultOptions.filename);
+
+                updateProgress(100, "Done!");
+
             } catch (error) {
                 console.error("PDF generation failed:", error);
                 updateProgress(0, "Failed to generate PDF");
