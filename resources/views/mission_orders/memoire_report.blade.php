@@ -2,7 +2,7 @@
 @section('title', $missionOrder->order_number . '-' . $missionOrder->employee->first_name . ' ' .$missionOrder->employee->last_name)
 @section('content')
     <div id="report-content" class="scale-content">
-        <div class="report-page" style="width: 210mm; height: 297mm; margin: 0 auto; padding: 2mm 8mm; box-sizing: border-box;">
+        <div class="report-page" style="width: 210mm; margin: 0 auto; padding: 2mm 8mm; box-sizing: border-box;">
             <!-- Header -->
             <div class="flex justify-between items-start mb-2">
                 <x-application-logo class="h-12 w-2/5" />
@@ -95,46 +95,52 @@
                                 <div class="-m-1.5 overflow-x-auto">
                                     <div class="p-[2px] min-w-full inline-block align-middle">
                                         <div class="overflow-hidden">
-                                            <table class="min-w-full divide-y divide-gray-200 border border-gray-300">
+                                            <table class="w-full divide-y divide-gray-200 border border-gray-300" style="table-layout: fixed;">
+                                                <colgroup>
+                                                    <col style="width: 70mm;"> <!-- Description -->
+                                                    <col style="width: 40mm;"> <!-- Date -->
+                                                    <col style="width: 30mm;"> <!-- Amount -->
+                                                    <col style="width: 54mm;"> <!-- Currency -->
+                                                </colgroup>
                                                 <thead>
                                                     <tr>
                                                         <th scope="col"
-                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase border border-gray-200">
                                                             Nature de
                                                             la dépense</th>
                                                         <th scope="col"
-                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase border border-gray-200">
                                                             Date
                                                             dépense</th>
                                                         <th scope="col"
-                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase border border-gray-200">
                                                             Montant</th>
                                                         <th scope="col"
-                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase">
+                                                            class="px-1 py-[1px] text-center text-xs font-medium text-gray-500 uppercase border border-gray-200">
                                                             Devise</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @forelse ($missionOrder->expenses as $expense)
-                                                        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
-                                                            <td
-                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm font-medium text-gray-800">
-                                                                {{ $expense->description }}</td>
-                                                            <td
-                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm text-gray-800">
-                                                                {{ $expense->expense_date->format('d/m/Y H:i') }}</td>
-                                                            <td
-                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm text-gray-800">
-                                                                {{ $expense->amount }}</td>
-                                                            <td
-                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm text-gray-800">
-                                                                {{ $expense->currency }}</td>
+                                                        <tr class="odd:bg-white even:bg-gray-100">
+                                                            <td class="px-1 py-[1px] border border-gray-200 text-sm text-gray-800 break-words align-top">
+                                                                {{ $expense->description }}
+                                                            </td>
+                                                            <td class="px-1 py-[1px] border border-gray-200 text-sm text-gray-800 break-words align-top text-center">
+                                                                {{ $expense->expense_date->format('d/m/Y H:i') }}
+                                                            </td>
+                                                            <td class="px-1 py-[1px] border border-gray-200 text-sm text-gray-800 break-words align-top text-right">
+                                                                {{ number_format($expense->amount, 2) }}
+                                                            </td>
+                                                            <td class="px-1 py-[1px] border border-gray-200 text-sm text-gray-800 break-words align-top text-center">
+                                                                {{ $expense->currency }}
+                                                            </td>
                                                         </tr>
                                                     @empty
-                                                        <tr class="odd:bg-white even:bg-gray-100 hover:bg-gray-100">
-                                                            <td colspan="4"
-                                                                class="px-1 text-center border border-gray-200 py-[1px] whitespace-nowrap text-sm font-medium text-gray-800">
-                                                                {{ __('No Expenses Found') }}</td>
+                                                        <tr>
+                                                            <td colspan="4" class="px-1 py-[1px] text-center border border-gray-200 text-sm font-medium text-gray-800">
+                                                                {{ __('No Expenses Found') }}
+                                                            </td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>
@@ -312,20 +318,29 @@
     </div>
     <style>
         @media print {
-
             html,
             body {
                 width: 210mm;
-                height: 297mm;
+                min-height: 297mm;
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white !important;
             }
-
+table {
+        page-break-inside: auto;
+    }
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+    td, th {
+        padding: 1px 2px;
+        font-size: 10pt;
+    }
             .report-page {
-                width: 190mm !important;
-                height: 277mm !important;
-                margin: 10mm auto !important;
+                width: 210mm !important;
+                min-height: 277mm !important;
+                margin: 3mm 3mm !important;
                 page-break-after: avoid;
                 page-break-inside: avoid;
             }
@@ -340,7 +355,24 @@
             }
         }
 
+/* Ensure table respects fixed layout */
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
 
+/* Cell styling */
+td, th {
+    overflow: hidden;
+    word-wrap: break-word;
+    padding: 2px 4px;
+}
+/* Specific column widths */
+col:nth-child(1) { width: 70mm; } /* Description */
+col:nth-child(2) { width: 40mm; } /* Date */
+col:nth-child(3) { width: 30mm; } /* Amount */
+col:nth-child(4) { width: 54mm; } /* Currency */
         /* Screen styles */
         .report-page {
             background: white;
@@ -422,69 +454,58 @@
         }
 
         async function generatePDF(element, customOptions = {}) {
-    try {
-        updateProgress(10, "Preparing content...");
+            try {
+                updateProgress(10, "Preparing content...");
 
-        // First get the height of the content
-        const contentHeight = element.scrollHeight;
-        const pageHeight = 277 * 3.78; // 277mm in pixels (approx)
-
-        // Calculate scale factor if content is taller than page
-        let scale = 1;
-        if (contentHeight > pageHeight) {
-            scale = pageHeight / contentHeight * 0.95; // 95% to add some margin
-        }
-
-        const defaultOptions = {
-            margin: 0,
-            filename: `Mémoire-{{ $missionOrder->order_number }}-{{ $missionOrder->employee->first_name }}_{{ $missionOrder->employee->last_name }}.pdf`,
-            html2canvas: {
-                scale: 2,
-                useCORS: true,
-                windowHeight: element.scrollHeight,
-                onclone: (clonedDoc) => {
-                    // Apply scaling to the cloned document
-                    const reportContent = clonedDoc.getElementById('report-content');
-                    if (reportContent) {
-                        reportContent.style.transform = `scale(${scale})`;
-                        reportContent.style.width = `${100/scale}%`;
-                        reportContent.style.height = `${100/scale}%`;
+                const defaultOptions = {
+                    margin: 0, // Add some margin
+                    filename: `Mémoire-{{ $missionOrder->order_number }}-{{ $missionOrder->employee->first_name }}_{{ $missionOrder->employee->last_name }}.pdf`,
+                    html2canvas: {
+                        scale: 1,
+                        useCORS: true,
+                        allowTaint: true,
+                        scrollY: 0,
+                        letterRendering: true,
+                        logging: false,
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'portrait',
+                        hotfixes: ['px_scaling']
+                    },
+                    pagebreak: {
+                        mode: ['avoid-all', 'css', 'legacy'],
+                        before: '.page-break'
                     }
-                }
-            },
-            jsPDF: {
-                unit: 'mm',
-                format: 'a4',
-                orientation: 'portrait',
+                };
+
+                const options = {
+                    ...defaultOptions,
+                    ...customOptions
+                };
+
+                updateProgress(30, "Generating PDF...");
+
+                await new Promise((resolve, reject) => {
+                    html2pdf()
+                        .set(options)
+                        .from(element)
+                        .save()
+                        .then(() => {
+                            updateProgress(90, "Finalizing PDF...");
+                            setTimeout(() => {
+                                updateProgress(100, "Done!");
+                                resolve();
+                            }, 500);
+                        })
+                        .catch(reject);
+                });
+            } catch (error) {
+                console.error("PDF generation failed:", error);
+                updateProgress(0, "Failed to generate PDF");
+                throw error;
             }
-        };
-
-        const options = {
-            ...defaultOptions,
-            ...customOptions
-        };
-
-        updateProgress(30, "Generating PDF...");
-
-        await new Promise((resolve, reject) => {
-            html2pdf()
-                .set(options)
-                .from(element)
-                .save()
-                .then(() => {
-                    updateProgress(90, "Finalizing PDF...");
-                    setTimeout(() => {
-                        updateProgress(100, "Done!");
-                        resolve();
-                    }, 500);
-                })
-                .catch(reject);
-        });
-    } catch (error) {
-        console.error("PDF generation failed:", error);
-        updateProgress(0, "Failed to generate PDF");
-        throw error;
-    }
-}
+        }
     </script>
 @endsection
