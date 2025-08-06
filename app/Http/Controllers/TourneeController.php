@@ -114,7 +114,7 @@ class TourneeController extends Controller
                     break;
             }
 */
-$status = 'approved';  
+$status = 'approved';
       }
         $tournee = Tournee::create(array_merge($request->all(), ['status' => $status]));
         $notification = new TourneeLevelNotification($tournee);
@@ -211,7 +211,7 @@ $status = 'approved';
                 }
                 break;
             case 'sg_approve':
-case 'approved':               
+case 'approved':
  $users = User::whereHas('employee', function ($query) {
                     $query->where('role', 'sg');
                 })->get();
@@ -301,7 +301,7 @@ case 'approved':
 
         ]);
         $action = $request->input('action');
-        $memor_status = '';
+        $memor_status = null;
         if ($action === 'partialSubmit') {
             $tournee->update($request->all());
             return redirect()->route('mission_orders.m_create', $tournee);
@@ -348,7 +348,7 @@ $memor_status = 'approved';
                 }
                 break;
             case 'sg_approve':
-case 'approved':               
+case 'approved':
  $users = User::whereHas('employee', function ($query) {
                     $query->where('role', 'sg');
                 })->get();

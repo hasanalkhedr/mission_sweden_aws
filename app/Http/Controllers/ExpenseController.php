@@ -18,7 +18,8 @@ class ExpenseController extends Controller
             'currency' => 'required',
             'expense_date' => 'required|date|after_or_equal:'.$missionOrder->start_date.'|before_or_equal:'.$missionOrder->end_date,
             'description' => 'required',
-            'expense_document' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            //'expense_document' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'expense_document' => 'required|file|mimes:jpg,jpeg,png,gif,pdf|max:4096',
  ],
      [
          'expense_date.after_or_equal' => 'Le champ date de dépense doit être une date postérieure ou égale à :date.',
@@ -46,7 +47,8 @@ class ExpenseController extends Controller
             'currency' => 'required',
             'expense_date' => 'required|date|after_or_equal:'.$expense->missionOrder->start_date.'|before_or_equal:'.$expense->missionOrder->end_date,
             'description' => 'required',
-            'expense_document' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 'expense_document' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'expense_document' => 'required|file|mimes:jpg,jpeg,png,gif,pdf|max:4096',
         ]);
 
         $expense->update($request->all());
