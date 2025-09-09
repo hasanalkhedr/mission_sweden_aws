@@ -116,11 +116,11 @@
                     <x-select-input name="bareme_id" required class="select2">
                         @foreach ($baremes as $bareme)
                             @if(str_contains($bareme->pays, 'France'))
-                            <option {{ old('bareme_id') == $bareme->id ? 'selected' : '' }} value="{{ $bareme->id }}">
+                            <option {{ old('bareme_id', 184) == $bareme->id ? 'selected' : '' }} value="{{ $bareme->id }}">
                                 {{ $bareme->pays }} ({{ $bareme->currency }})
                             </option>
                             @else
-                                <option {{ old('bareme_id') == $bareme->id ? 'selected' : '' }} value="{{ $bareme->id }}">
+                                <option {{ old('bareme_id', 184) == $bareme->id ? 'selected' : '' }} value="{{ $bareme->id }}">
                                     {{ $bareme->pays }} (Montant:{{ $bareme->pays_per_day . ' ' . $bareme->currency }} /
                                     Repas:{{ $bareme->meal_cost }} /
                                     Hebergement:{{ $bareme->accomodation_cost }})

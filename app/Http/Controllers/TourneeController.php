@@ -62,7 +62,7 @@ class TourneeController extends Controller
     public function create()
     {
         if (auth()->user()->employee->allow_order) {
-            $bareme = Bareme::where('pays', '=', 'LIBAN')->limit(1)->get();
+            $bareme = Bareme::where('pays', '=', 'SUEDE')->limit(1)->get();
             $tour_number = Tournee::generateOrderNumber();
             return view('tournees.create', compact('bareme', 'tour_number'));
         } else {
