@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Bareme;
+use App\Models\Employee;
 use App\Models\Tournee;
 use App\Models\User;
 use App\Notifications\MemoireTourneeLevelNotification;
@@ -56,8 +57,11 @@ class TourneeController extends Controller
     public function showReport($id)
     {
         $tournee = Tournee::findOrFail($id);
-
-        return view('tournees.tournee_report', compact('tournee'));
+        $signature = Employee::where('role', 'sg')->whereHas('department', function ($query) {
+            $query->where('name', 'COCAC / Directrice');
+        })->first();
+        $signatureName = $signature ? $signature->first_name.' '.$signature->last_name: 'Sophie Maysonnave';
+        return view('tournees.tournee_report', compact('tournee', 'signatureName'));
     }
     public function create()
     {
@@ -284,7 +288,8 @@ case 'approved':
     }
     public function m_create(Request $request, Tournee $tournee)
     {
-        return view('tournees.m_create', compact('tournee'));
+        $currencies = Bareme::select('currency')->distinct()->pluck('currency');
+        return view('tournees.m_create', compact('tournee', 'currencies'));
     }
     public function m_edit(Request $request, Tournee $tournee)
     {
@@ -362,7 +367,11 @@ case 'approved':
     }
     public function m_report(Request $request, Tournee $tournee)
     {
-        return view('tournees.memoire_report', compact('tournee'));
+        $signature = Employee::where('role', 'sg')->whereHas('department', function ($query) {
+            $query->where('name', 'COCAC / Directrice');
+        })->first();
+        $signatureName = $signature ? $signature->first_name.' '.$signature->last_name: 'Sophie Maysonnave';
+        return view('tournees.memoire_report', compact('tournee', 'signatureName'));
     }
     public function m_destroy(Request $request, Tournee $tournee)
     {

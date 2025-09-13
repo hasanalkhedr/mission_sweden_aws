@@ -185,14 +185,14 @@
                         <td class="w-full py-1" colspan="2">
                             <table class="border border-gray-500 table-auto text-center w-full">
                                 <tr>
-                                    <td rowspan="2" class="w-1/5 border border-gray-500">Totaux</td>
+                                    <td rowspan="2" class="w-1/10 border border-gray-500">Totaux</td>
                                     <td class="border border-gray-500 w-1/5">IJM</td>
                                     <td class="border border-gray-500 w-1/5">Frais divers</td>
                                     <td class="border border-gray-500 w-1/5">Avance</td>
-                                    <td class="border border-gray-500 w-1/5">Net à payer</td>
+                                    <td class="border border-gray-500 w-3/10">Net à payer</td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-gray-500 w-1/5">{{ $missionOrder->total_amount }}</td>
+                                    <td class="border border-gray-500 w-1/5">{{ $missionOrder->total_amount }} {{$missionOrder->bareme->currency}}</td>
                                     <td class="border border-gray-500 w-1/5">
                                         <ul>
                                             @forelse ($missionOrder->getExpensesByCurrency() as $currency=>$currencyAmount)
@@ -202,8 +202,8 @@
                                             @endforelse
                                         </ul>
                                     </td>
-                                    <td class="border border-gray-500 w-1/5">{{ $missionOrder->advance }}</td>
-                                    <td class="border border-gray-500 w-1/5">
+                                    <td class="border border-gray-500 w-1/5">{{ $missionOrder->advance }} {{$missionOrder->advance_currency}}</td>
+                                    <td class="border border-gray-500 w-3/10">
                                         <ul>
                                             @forelse ($missionOrder->getMemoireTotals() as $currency=>$currencyAmount)
                                                 <li>{{ $currencyAmount }} {{ $currency }}</li>
@@ -278,7 +278,7 @@
                             <span></span>
                         </td>
                         <td class="w-7/12 text-center">
-                            <span class="font-bold text-lg w-24 text-center">Katerina Doytchinov</span>
+                            <span class="font-bold text-lg w-24 text-center">{{$signatureName}}</span>
                         </td>
                     </tr>
                     <tr>

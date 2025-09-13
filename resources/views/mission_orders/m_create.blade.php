@@ -143,13 +143,23 @@
             </div>
         </div>
         <div class="flex flex-wrap -mx-3 mb-2">
-            <div class="w-1/2 px-3">
+            <div class="w-1/3 px-3">
                 <x-label>
-                    Avance sur IJM (EURO ou USD)<span class="text-red-500">*</span>
+                    Avance sur IJM (EURO, USD, COURONNE SUEDOISE)<span class="text-red-500">*</span>
                 </x-label>
                 <x-text-input type="number" name="advance" step="any" value="{{old('advance',  $missionOrder->advance )}}" />
             </div>
-            <div class="w-1/2 px-3">
+            <div class="w-1/3 px-3">
+                <div class="mb-4">
+                    <x-label for="advance_currency">Devise<span class="text-red-500">*</span>:</x-label>
+                    <x-select-input name="advance_currency">
+                        @foreach($currencies as $currency)
+                            <option value="{{$currency }}" {{ old('advance_currency', $missionOrder->advance_currency) == $currency ? 'selected' : '' }}>{{ $currency }}</option>
+                        @endforeach
+                    </x-select-input>
+                </div>
+            </div>
+            <div class="w-1/3 px-3">
                 <x-label>{{__('Submit Values before add expenses')}}</x-label>
                 <x-primary-button name="action" value="partialSubmit" class="h-11">Soumettre des valeurs</x-primary-button>
             </div>

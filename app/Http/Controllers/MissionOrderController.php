@@ -55,7 +55,11 @@ class MissionOrderController extends Controller
     }
     public function showReport(Request $request, MissionOrder $missionOrder)
     {
-        return view('mission_orders.mission_order_report', compact('missionOrder'));
+        $signature = Employee::where('role', 'sg')->whereHas('department', function ($query) {
+            $query->where('name', 'COCAC / Directrice');
+        })->first();
+        $signatureName = $signature ? $signature->first_name.' '.$signature->last_name: 'Sophie Maysonnave';
+        return view('mission_orders.mission_order_report', compact('missionOrder', 'signatureName'));
     }
     public function create()
     {
@@ -307,10 +311,12 @@ case 'approved':
     }
     public function m_create(Request $request, MissionOrder $missionOrder)
     {
-        return view('mission_orders.m_create', compact('missionOrder'));
+        $currencies = Bareme::select('currency')->distinct()->pluck('currency');
+        return view('mission_orders.m_create', compact('missionOrder', 'currencies'));
     }
     public function m_update(Request $request, MissionOrder $missionOrder)
     {
+        //dd($request);
         $request->validate([
             'no_ded_accomodation' => 'required|numeric',
             'no_ded_meals' => 'required|numeric',
@@ -380,7 +386,11 @@ case 'approved':
     }
     public function m_report(Request $request, MissionOrder $missionOrder)
     {
-        return view('mission_orders.memoire_report', compact('missionOrder'));
+        $signature = Employee::where('role', 'sg')->whereHas('department', function ($query) {
+            $query->where('name', 'COCAC / Directrice');
+        })->first();
+        $signatureName = $signature ? $signature->first_name.' '.$signature->last_name: 'Sophie Maysonnave';
+        return view('mission_orders.memoire_report', compact('missionOrder', 'signatureName'));
     }
     public function m_destroy(Request $request, MissionOrder $missionOrder)
     {

@@ -32,7 +32,7 @@ if ($tournee->ijm) {
                 } else if (strtotime($tournee->end_time) >= strtotime('02:00 PM')) {
                     $tournee->no_meals = $tournee->no_meals + 1;
                 }
-            }       
+            }
  });
         static::updating(function ($tournee) {
             if ($tournee->ijm) {
@@ -83,6 +83,7 @@ if ($tournee->ijm) {
         'start_time','end_time', 'arrive_location','departure_location','total_amount', 'currency', 'status','charge','ijm', 'budget_text','memor_status',
         'memor_date',
         'advance',
+        'advance_currency'
     ];
     protected $casts = [
         'order_date' => 'date',
@@ -125,7 +126,10 @@ if ($tournee->ijm) {
 
         $expensesTotals = $this->getExpensesByCurrency();
         $ex = $expensesTotals[$this->bareme->currency] ?? 0;
-        $expensesTotals[$this->bareme->currency] = $ex + $this->total_amount-$this->advance;
+        $expensesTotals[$this->bareme->currency] = $ex + $this->total_amount;
+
+        $ex2 = $expensesTotals[$this->advance_currency] ?? 0;
+        $expensesTotals[$this->advance_currency] = $ex2 - $this->advance;
         return $expensesTotals;
         //return array_merge($expensesTotals, [$this->bareme->currency => $this->total_amount-$this->advance]);
     }

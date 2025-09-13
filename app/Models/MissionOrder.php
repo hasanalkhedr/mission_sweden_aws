@@ -104,6 +104,7 @@ public static function generateOrderNumber()
         'memor_status',
         'advance',
         'memor_date',
+        'advance_currency'
     ];
     protected $casts = [
         'order_date' => 'date',
@@ -146,7 +147,10 @@ public static function generateOrderNumber()
     {
         $expensesTotals = $this->getExpensesByCurrency();
         $ex = $expensesTotals[$this->bareme->currency] ?? 0;
-        $expensesTotals[$this->bareme->currency] = $ex + $this->total_amount-$this->advance;
+        $expensesTotals[$this->bareme->currency] = $ex + $this->total_amount;
+
+        $ex2 = $expensesTotals[$this->advance_currency] ?? 0;
+        $expensesTotals[$this->advance_currency] = $ex2 - $this->advance;
         return $expensesTotals;
        // return array_merge($expensesTotals, [$this->bareme->currency => $this->total_amount-$this->advance]);
     }

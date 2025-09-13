@@ -140,7 +140,7 @@
             <tbody>
                 <tr>
                     <td colspan="2" class="w-full px-28 pt-2 pb-2 justify-end items-end text-right">
-                        <span class="font-bold text-lg w-24 text-center">Katerina Doytchinov</span>
+                        <span class="font-bold text-lg w-24 text-center">{{$signatureName}}</span>
                     </td>
                 </tr>
                 <tr>
