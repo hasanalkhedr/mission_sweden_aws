@@ -53,7 +53,7 @@ class EmployeeController extends Controller
         $currentUserCount = Employee::count();
 
         if ($userLimit && $currentUserCount >= $userLimit) {
-            return back()->withErrors(['limit' => 'User creation limit reached.']);
+            return back()->withErrors(['limit' => "Le nombre maximal d'utilisateurs a été atteint."]);
         }
         $request->validate([
             'first_name' => 'required',
