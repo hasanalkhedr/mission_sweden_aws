@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\Department;
 use App\Models\User;
+use Config;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -48,6 +49,12 @@ class EmployeeController extends Controller
     }
     public function store(Request $request)
     {
+        $userLimit = Config::get('app.user_limit');
+        $currentUserCount = Employee::count();
+
+        if ($userLimit && $currentUserCount >= $userLimit) {
+            return back()->withErrors(['limit' => 'User creation limit reached.']);
+        }
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
